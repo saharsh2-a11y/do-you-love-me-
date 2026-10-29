@@ -1,22 +1,161 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Do You Love Me?</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Be My Valentine?</title>
+  <style>
+    * { 
+      margin: 0; 
+      padding: 0; 
+      box-sizing: border-box; 
+    } 
+
+    body { 
+      min-height: 100vh; 
+      display: flex; 
+      justify-content: center; 
+      align-items: center; 
+      background: linear-gradient(135deg, #ffe6ea 0%, #ffc0cb 100%); 
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+      overflow: hidden;
+    } 
+
+    .card { 
+      text-align: center; 
+      background: rgba(255, 255, 255, 0.95); 
+      backdrop-filter: blur(10px);
+      padding: 40px 30px; 
+      border-radius: 24px; 
+      box-shadow: 0 15px 35px rgba(233, 30, 99, 0.15); 
+      max-width: 380px;
+      width: 90%;
+      position: relative;
+      transition: transform 0.3s ease;
+    } 
+
+    .card:hover {
+      transform: translateY(-5px);
+    }
+
+    img { 
+      width: 120px; 
+      height: 120px;
+      object-fit: cover;
+      border-radius: 50%;
+      margin-bottom: 20px; 
+      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    } 
+
+    h1 { 
+      color: #e91e63; 
+      font-size: 24px;
+      margin-bottom: 30px; 
+      font-weight: 700;
+    } 
+
+    .buttons { 
+      position: relative;
+      width: 100%;
+      height: 60px;
+      margin: 0 auto;
+    } 
+
+    button { 
+      padding: 12px 28px; 
+      font-size: 16px; 
+      font-weight: 700; 
+      border: none; 
+      border-radius: 30px; 
+      cursor: pointer; 
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    } 
+
+    #yesBtn { 
+      background-color: #4caf50; 
+      color: white; 
+      position: absolute;
+      left: 20px;
+      top: 0;
+    } 
+
+    #yesBtn:hover {
+      background-color: #43a047;
+      transform: scale(1.1);
+      box-shadow: 0 6px 16px rgba(76, 175, 80, 0.4);
+    }
+
+    #noBtn { 
+      background-color: #f44336; 
+      color: white; 
+      position: absolute; 
+      right: 20px;
+      top: 0;
+      transition: all 0.2s ease; 
+    }
+
+    /* Celebration Screen */
+    .celebration {
+      display: none;
+    }
+
+    .celebration h1 {
+      font-size: 28px;
+      color: #e91e63;
+    }
+  </style>
 </head>
 <body>
-  <div class="container">
-    <div class="card">
-      <img src="WhatsApp Image 2026-10-28 at 8.59.16 PM.jpeg" />
-      <h1 id="question">Do you love me? ❤️</h1>
+
+  <div class="card" id="card">
+    <div id="questionScreen">
+      <img src="https://images.unsplash.com/photo-1518199266791-5375a83190b7?w=300" alt="Cute Heart">
+      <h1>Will you be my Valentine?</h1>
       <div class="buttons">
-        <button id="yesBtn">YES</button>
-        <button id="noBtn">NO</button>
+        <button id="yesBtn">Yes!</button>
+        <button id="noBtn">No</button>
       </div>
     </div>
+
+    <div id="celebrationScreen" class="celebration">
+      <img src="https://images.unsplash.com/photo-1518895949257-7621c3c786d7?w=300" alt="Flowers">
+      <h1>Yay! See you then! ❤️</h1>
+    </div>
   </div>
-  <script src="script.js"></script>
+
+  <script>
+    const noBtn = document.getElementById('noBtn');
+    const yesBtn = document.getElementById('yesBtn');
+    const questionScreen = document.getElementById('questionScreen');
+    const celebrationScreen = document.getElementById('celebrationScreen');
+
+    // Move "No" button away when hovered or touched
+    function moveNoButton() {
+      const cardRect = document.getElementById('card').getBoundingClientRect();
+      const btnRect = noBtn.getBoundingClientRect();
+
+      const maxX = cardRect.width - btnRect.width - 20;
+      const maxY = cardRect.height - btnRect.height - 20;
+
+      const randomX = Math.floor(Math.random() * maxX);
+      const randomY = Math.floor(Math.random() * maxY);
+
+      noBtn.style.position = 'absolute';
+      noBtn.style.left = `${randomX}px`;
+      noBtn.style.top = `${randomY}px`;
+    }
+
+    noBtn.addEventListener('mouseenter', moveNoButton);
+    noBtn.addEventListener('touchstart', moveNoButton);
+
+    // Celebration when "Yes" is clicked
+    yesBtn.addEventListener('click', () => {
+      questionScreen.style.display = 'none';
+      celebrationScreen.style.display = 'block';
+    });
+  </script>
+
 </body>
 </html>
+
