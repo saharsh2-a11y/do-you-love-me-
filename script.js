@@ -1,4 +1,4 @@
- {
+* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -21,8 +21,8 @@ body {
   box-shadow: 0 10px 25px rgba(0,0,0,0.1);
 }
 
-.img {
-  width: 100px;
+.gif {
+  width: 180px;
   margin-bottom: 20px;
 }
 
