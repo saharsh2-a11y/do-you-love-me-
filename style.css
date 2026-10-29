@@ -54,6 +54,4 @@ button {
 #noBtn {
   background-color: #f44336;
   color: white;
-  position: absolute;
-  transition: 0.2s ease;
 }
