@@ -49,7 +49,7 @@ button {
 #yesBtn {
   background-color: #4caf50;
   color: white;
-  margin-left: auto;
+  margin-left: 20px;
 }
 
 #noBtn {
