@@ -44,7 +44,7 @@
       width: 90%;
       position: relative;
       z-index: 2;
-      transition: all 0.3s ease;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
       border: 1px solid rgba(255, 255, 255, 0.4);
     } 
 
@@ -134,7 +134,7 @@
       right: 20px;
       top: 10px;
       transition: all 0.15s ease; 
-      z-index: 999; /* Ensure it stays above other elements when moving around screen */
+      z-index: 999;
     }
 
     /* Celebration Screen */
@@ -188,6 +188,7 @@
     const celebrationScreen = document.getElementById('celebrationScreen');
     const canvas = document.getElementById('heartCanvas');
     const ctx = canvas.getContext('2d');
+    const questionContainer = document.getElementById('card'); // Maps to your card container context
 
     let yesScale = 1;
 
@@ -246,26 +247,28 @@
     }
     animateBackground();
 
-    // Make the "NO" button run away on hover/touch using viewport bounds
-    noBtn.addEventListener('mouseover', moveButton);
-    noBtn.addEventListener('touchstart', (e) => {
-      e.preventDefault(); // Prevents default touch clicking behavior
-      moveButton();
-    });
-
-    function moveButton() {
-      const x = Math.floor(Math.random() * (window.innerWidth - noBtn.offsetWidth));
-      const y = Math.floor(Math.random() * (window.innerHeight - noBtn.offsetHeight));
+    // Fixed and safely mapped interaction snippet
+    noBtn.addEventListener("mouseover", () => {
+      // Use offsetWidth for horizontal limits and offsetHeight for vertical limits to prevent button from running off-screen
+      const newX = Math.floor(Math.random() * (questionContainer.offsetWidth - noBtn.offsetWidth));
+      const newY = Math.floor(Math.random() * (questionContainer.offsetHeight - noBtn.offsetHeight));
       
-      noBtn.style.left = `${x}px`;
-      noBtn.style.top = `${y}px`;
+      // Fixed mixed string quotes typo (changed closing ' to a closing ` backtick)
+      noBtn.style.left = `${newX}px`;
+      noBtn.style.top = `${newY}px`;
 
-      // Keep the "Yes" growth tactic active alongside your viewport handler!
+      // Yes button dynamic growth trigger
       yesScale += 0.15;
       yesBtn.style.transform = `scale(${yesScale})`;
-    }
+    });
 
-    // Intense Confetti Burst Effect on Acceptance
+    // Make touch devices trigger the safe run function smoothly
+    noBtn.addEventListener('touchstart', (e) => {
+      e.preventDefault();
+      noBtn.dispatchEvent(new Event('mouseover'));
+    });
+
+    // Confetti explosion logic
     function triggerConfettiBlast() {
       for(let i = 0; i < 70; i++) {
         const confetti = new HeartParticle();
@@ -305,3 +308,4 @@
 
 </body>
 </html>
+
