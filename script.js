@@ -16,6 +16,6 @@ function moveButton() {
 
 // Show success message when clicking "YES"
 yesBtn.addEventListener('click', () => {
-  question.innerHTML = "I knew it! 🥰❤️";
+  question.innerHTML = "I Love you more gabbu 😘❤️";
   noBtn.style.display = "none";
 });
