@@ -22,7 +22,7 @@ body {
 }
 
 .gif {
-  width: 50px;
+  width: 180px;
   margin-bottom: 20px;
 }
 
@@ -55,6 +55,5 @@ button {
   background-color: #f44336;
   color: white;
   position: absolute;
-  left: 120px;
   transition: 0.2s ease;
 }
