@@ -1,59 +1,21 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+const noBtn = document.getElementById('noBtn');
+const yesBtn = document.getElementById('yesBtn');
+const question = document.getElementById('question');
+
+// Make the "NO" button run away on hover/touch
+noBtn.addEventListener('mouseover', moveButton);
+noBtn.addEventListener('touchstart', moveButton);
+
+function moveButton() {
+  const x = Math.floor(Math.random() * (window.innerWidth - noBtn.offsetWidth));
+  const y = Math.floor(Math.random() * (window.innerHeight - noBtn.offsetHeight));
+  
+  noBtn.style.left = `${x}px`;
+  noBtn.style.top = `${y}px`;
 }
 
-body {
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: #ffe6ea;
-  font-family: Arial, sans-serif;
-}
-
-.card {
-  text-align: center;
-  background: white;
-  padding: 30px;
-  border-radius: 20px;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-}
-
-.gif {
-  width: 180px;
-  margin-bottom: 20px;
-}
-
-h1 {
-  color: #e91e63;
-  margin-bottom: 25px;
-}
-
-.buttons {
-  display: flex;
-  justify-content: center;
-  gap: 20px;
-}
-
-button {
-  padding: 12px 30px;
-  font-size: 18px;
-  font-weight: bold;
-  border: none;
-  border-radius: 25px;
-  cursor: pointer;
-}
-
-#yesBtn {
-  background-color: #4caf50;
-  color: white;
-}
-
-#noBtn {
-  background-color: #f44336;
-  color: white;
-  position: absolute;
-  transition: 0.2s ease;
-}
+// Show success message when clicking "YES"
+yesBtn.addEventListener('click', () => {
+  question.innerHTML = "I knew it! 🥰❤️";
+  noBtn.style.display = "none";
+});
