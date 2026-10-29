@@ -21,7 +21,6 @@ body {
   box-shadow: 0 10px 25px rgba(0,0,0,0.1); 
 } 
 
-/* Changed .img to img and shrunk the width to 12px */
 img { 
   width: 12px; 
   height: auto;
