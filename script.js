@@ -1,4 +1,4 @@
-* {
+ {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -21,8 +21,8 @@ body {
   box-shadow: 0 10px 25px rgba(0,0,0,0.1);
 }
 
-.gif {
-  width: 180px;
+.img {
+  width: 100px;
   margin-bottom: 20px;
 }
 
@@ -55,6 +55,5 @@ button {
   background-color: #f44336;
   color: white;
   position: absolute;
-  left: 50px;
   transition: 0.2s ease;
 }
