@@ -1,0 +1,148 @@
+* { 
+  margin: 0; 
+  padding: 0; 
+  box-sizing: border-box; 
+} 
+
+body { 
+  min-height: 100vh; 
+  display: flex; 
+  justify-content: center; 
+  align-items: center; 
+  background: linear-gradient(135deg, #ffe6ea 0%, #ffc0cb 100%); 
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+  overflow: hidden;
+  position: relative;
+} 
+
+/* Background Canvas for Floating Hearts */
+#heartCanvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.card { 
+  text-align: center; 
+  background: rgba(255, 255, 255, 0.85); 
+  backdrop-filter: blur(15px);
+  padding: 40px 30px; 
+  border-radius: 24px; 
+  box-shadow: 0 20px 40px rgba(233, 30, 99, 0.2); 
+  max-width: 400px;
+  width: 90%;
+  position: relative;
+  z-index: 2;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+} 
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 25px 50px rgba(233, 30, 99, 0.25);
+}
+
+/* Interactive Heart Icon Container */
+.image-container {
+  position: relative;
+  width: 130px;
+  height: 130px;
+  margin: 0 auto 25px;
+}
+
+img { 
+  width: 100%; 
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+  box-shadow: 0 8px 24px rgba(233, 30, 99, 0.2);
+} 
+
+/* Heart pulse effect */
+.pulse-glow {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: rgba(233, 30, 99, 0.2);
+  animation: pulse 2s infinite;
+  z-index: -1;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); opacity: 0.6; }
+  100% { transform: scale(1.4); opacity: 0; }
+}
+
+h1 { 
+  color: #d81b60; 
+  font-size: 26px;
+  margin-bottom: 35px; 
+  font-weight: 700;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.05);
+} 
+
+.buttons { 
+  position: relative;
+  width: 100%;
+  height: 80px;
+  margin: 0 auto;
+} 
+
+button { 
+  padding: 14px 32px; 
+  font-size: 16px; 
+  font-weight: 700; 
+  border: none; 
+  border-radius: 30px; 
+  cursor: pointer; 
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  transition: background-color 0.2s, transform 0.1s, box-shadow 0.2s;
+} 
+
+#yesBtn { 
+  background-color: #e91e63; 
+  color: white; 
+  position: absolute;
+  left: 20px;
+  top: 10px;
+  z-index: 10;
+} 
+
+#yesBtn:hover {
+  background-color: #c2185b;
+  box-shadow: 0 6px 20px rgba(233, 30, 99, 0.4);
+}
+
+#noBtn { 
+  background-color: #757575; 
+  color: white; 
+  position: absolute; 
+  right: 20px;
+  top: 10px;
+  transition: all 0.15s ease; 
+  z-index: 999;
+}
+
+/* Celebration Screen */
+.celebration {
+  display: none;
+  animation: fadeIn 0.8s ease forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.celebration h1 {
+  font-size: 30px;
+  color: #d81b60;
+  margin-top: 15px;
+}
