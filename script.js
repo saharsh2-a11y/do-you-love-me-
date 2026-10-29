@@ -5,7 +5,7 @@ const question = document.getElementById('question');
 // Make the "NO" button run away on hover/touch
 noBtn.addEventListener('mouseover', moveButton);
 noBtn.addEventListener('touchstart', moveButton);
-
+noBtn.addEventListener('click', moveButton);
 function moveButton() {
   const x = Math.floor(Math.random() * (window.innerWidth - noBtn.offsetWidth));
   const y = Math.floor(Math.random() * (window.innerHeight - noBtn.offsetHeight));
