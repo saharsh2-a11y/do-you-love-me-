@@ -121,15 +121,27 @@ button {
 }
 
 #noBtn { 
-  background-color: #757575; 
-  color: white; 
-  position: absolute; 
-  right: 20px;
-  top: 10px;
-  transition: all 0.15s ease; 
-  z-index: 999;
+  background-color: #f44336;
+  color: white;
+  position: absolute;
+  transition: 0.2s ease;
 }
 
+const noBtn = document.getElementById('noBtn');
+const yesBtn = document.getElementById('yesBtn');
+const question = document.getElementById('question');
+
+// Make the "NO" button run away on hover/touch
+noBtn.addEventListener('mouseover', moveButton);
+noBtn.addEventListener('touchstart', moveButton);
+
+function moveButton() {
+  const x = Math.floor(Math.random() * (window.innerWidth - noBtn.offsetWidth));
+  const y = Math.floor(Math.random() * (window.innerHeight - noBtn.offsetHeight));
+  
+  noBtn.style.left = ${x}px;
+  noBtn.style.top = ${y}px;
+  
 /* Celebration Screen */
 .celebration {
   display: none;
