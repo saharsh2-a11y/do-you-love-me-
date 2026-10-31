@@ -94,8 +94,8 @@ body {
 .image-frame {
   position: relative;
   width: 100%;
-  max-width: 230px;
-  height: 230px;
+  max-width: 100px;
+  height: 100px;
   margin: 0 auto 18px;
   border-radius: 24px;
   overflow: hidden;
