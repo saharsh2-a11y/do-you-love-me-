@@ -10,103 +10,21 @@ const backgroundGallery = document.getElementById('backgroundGallery');
 
 const personalLoveLetter = `My love,
 
-You are the sweetest part of my life, and every moment with you feels lighter, warmer, and more beautiful. I still smile when I think about you, and I thank my heart every day for choosing you. You are not just someone I love — you are my comfort, my joy, my safe place, and the person I want to keep choosing in every season of life.
+You are the sweetest part of my life, and every moment with you feels lighter, warmer, and more beautiful. I still smile when I think about you, and I thank my heart every day for choosing you. You make my world feel brighter, softer, and infinitely more meaningful.
 
-I love your kindness, your smile, and the way you make the world feel softer just by being in it. Every dream I have feels brighter because you are in it. I want to keep making memories with you, laughing with you, growing with you, and loving you with all my heart.
+I love your kindness, your smile, and the way you make the world feel softer just by being in it. Every dream I have feels brighter because you are in it. I want to keep making memories with you, sharing laughter, and holding on to the love that makes life feel complete.
 
 You are my forever, my favorite person, and my home. I love you more than words can say. 💖💌`;
 
 const galleryImages = [
-  "images/WhatsApp Image 2026-10-31 at 10.43.52 PM.jpeg",
-  "images/WhatsApp Image 2026-10-31 at 10.43.54 PM.jpeg",
-  "images/WhatsApp Image 2026-10-31 at 10.43.58 PM.jpeg",
-  "images/WhatsApp Image 2026-10-31 at 10.43.59 PM (1).jpeg",
-  "images/WhatsApp Image 2026-10-31 at 10.43.59 PM (2).jpeg",
-  "images/WhatsApp Image 2026-10-31 at 10.43.59 PM (3).jpeg",
-  "images/WhatsApp Image 2026-10-31 at 10.43.59 PM.jpeg",
-  "images/WhatsApp Image 2026-10-31 at 10.44.00 PM (1).jpeg",
-  "images/WhatsApp Image 2026-10-31 at 10.44.00 PM (2).jpeg",
-  "images/WhatsApp Image 2026-10-31 at 10.44.00 PM.jpeg",
-  "images/WhatsApp Image 2026-10-31 at 10.44.01 PM (1).jpeg",
-  "images/WhatsApp Image 2026-10-31 at 10.44.01 PM (2).jpeg",
-  "images/WhatsApp Image 2026-10-31 at 10.44.01 PM (3).jpeg",
-  "images/WhatsApp Image 2026-10-31 at 10.44.01 PM.jpeg",
-  "images/WhatsApp Image 2026-10-31 at 10.44.02 PM (1).jpeg",
-  "images/WhatsApp Image 2026-10-31 at 10.44.02 PM (2).jpeg",
-  "images/WhatsApp Image 2026-10-31 at 10.44.02 PM.jpeg",
-  "images/WhatsApp Image 2026-10-31 at 10.44.03 PM (1).jpeg",
-  "images/WhatsApp Image 2026-10-31 at 10.44.03 PM (2).jpeg",
-  "images/WhatsApp Image 2026-10-31 at 10.44.03 PM (3).jpeg",
-  "images/WhatsApp Image 2026-10-31 at 10.44.03 PM.jpeg",
-  "images/WhatsApp Image 2026-10-31 at 10.44.04 PM (1).jpeg",
-  "images/WhatsApp Image 2026-10-31 at 10.44.04 PM (2).jpeg",
-  "images/WhatsApp Image 2026-10-31 at 10.44.04 PM.jpeg",
-  "images/WhatsApp Image 2026-10-31 at 10.46.17 PM.jpeg",
-  "images/WhatsApp Image 2026-10-31 at 10.46.18 PM.jpeg",
-  "images/WhatsApp Image 2026-10-31 at 10.46.20 PM.jpeg",
-  "images/WhatsApp Image 2026-10-31 at 10.46.21 PM.jpeg",
-  "images/WhatsApp Image 2026-10-31 at 10.46.23 PM.jpeg",
-  "images/WhatsApp Image 2026-10-31 at 10.46.35 PM (1).jpeg",
-  "images/WhatsApp Image 2026-10-31 at 10.46.35 PM.jpeg",
-  "images/WhatsApp Image 2026-10-31 at 10.46.36 PM (1).jpeg",
-  "images/WhatsApp Image 2026-10-31 at 10.46.36 PM.jpeg",
-  "images/WhatsApp Image 2026-10-31 at 10.48.05 PM.jpeg",
-  "images/WhatsApp Image 2026-10-31 at 10.48.06 PM.jpeg",
-  "images/WhatsApp Image 2026-10-31 at 10.48.09 PM.jpeg",
-  "images/WhatsApp Image 2026-10-31 at 10.48.12 PM.jpeg",
-  "images/WhatsApp Image 2026-10-31 at 10.48.13 PM.jpeg",
-  "images/WhatsApp Image 2026-10-31 at 10.48.28 PM.jpeg",
-  "images/WhatsApp Image 2026-10-31 at 10.48.30 PM.jpeg",
-  "images/WhatsApp Image 2026-10-31 at 10.48.33 PM.jpeg",
-  "images/WhatsApp Image 2026-10-31 at 10.48.36 PM.jpeg",
-  "images/WhatsApp Image 2026-10-31 at 10.48.37 PM.jpeg",
-  "images/WhatsApp Image 2026-10-31 at 10.48.38 PM.jpeg",
-  "images/WhatsApp Image 2026-10-31 at 10.48.42 PM.jpeg",
-  "images/WhatsApp Image 2026-10-31 at 10.48.48 PM.jpeg",
-  "images/WhatsApp Image 2026-10-31 at 10.48.49 PM.jpeg",
-  "images/WhatsApp Image 2026-10-31 at 10.49.02 PM.jpeg",
-  "images/WhatsApp Image 2026-10-31 at 10.49.06 PM.jpeg",
-  "images/WhatsApp Image 2026-10-31 at 10.49.13 PM.jpeg",
-  "images/WhatsApp Image 2026-10-31 at 10.49.14 PM.jpeg",
-  "images/WhatsApp Image 2026-10-31 at 10.49.16 PM.jpeg",
-  "images/WhatsApp Image 2026-10-31 at 10.49.18 PM.jpeg",
-  "images/WhatsApp Image 2026-10-31 at 10.49.21 PM.jpeg",
-  "images/WhatsApp Image 2026-10-31 at 10.49.24 PM.jpeg",
-  "images/WhatsApp Image 2026-10-31 at 10.49.27 PM.jpeg",
-  "images/WhatsApp Image 2026-10-31 at 10.49.30 PM.jpeg",
-  "images/WhatsApp Image 2026-10-31 at 10.49.40 PM.jpeg",
-  "images/WhatsApp Image 2026-10-31 at 10.49.41 PM.jpeg",
-  "images/WhatsApp Image 2026-10-31 at 10.49.43 PM.jpeg",
-  "images/WhatsApp Image 2026-10-31 at 10.49.44 PM.jpeg",
-  "images/WhatsApp Image 2026-10-31 at 10.49.46 PM.jpeg",
-  "images/WhatsApp Image 2026-10-31 at 10.49.48 PM.jpeg",
-  "images/WhatsApp Image 2026-10-31 at 10.49.49 PM.jpeg",
-  "images/WhatsApp Image 2026-10-31 at 10.49.52 PM.jpeg",
-  "images/WhatsApp Image 2026-10-31 at 10.49.56 PM.jpeg",
-  "images/WhatsApp Image 2026-10-31 at 10.49.57 PM (1).jpeg",
-  "images/WhatsApp Image 2026-10-31 at 10.49.57 PM.jpeg",
-  "images/WhatsApp Image 2026-10-31 at 10.49.58 PM (1).jpeg",
-  "images/WhatsApp Image 2026-10-31 at 10.49.58 PM.jpeg",
-  "images/WhatsApp Image 2026-10-31 at 10.49.59 PM.jpeg",
-  "images/WhatsApp Image 2026-10-31 at 10.50.00 PM.jpeg",
-  "images/WhatsApp Image 2026-10-31 at 10.50.01 PM.jpeg",
-  "images/WhatsApp Image 2026-10-31 at 10.50.02 PM (1).jpeg",
-  "images/WhatsApp Image 2026-10-31 at 10.50.02 PM (2).jpeg",
-  "images/WhatsApp Image 2026-10-31 at 10.50.02 PM.jpeg",
-  "images/WhatsApp Image 2026-10-31 at 10.50.03 PM (1).jpeg",
-  "images/WhatsApp Image 2026-10-31 at 10.50.03 PM.jpeg",
-  "images/WhatsApp Image 2026-10-31 at 10.50.04 PM (1).jpeg",
-  "images/WhatsApp Image 2026-10-31 at 10.50.04 PM.jpeg",
-  "images/WhatsApp Image 2026-10-31 at 10.50.07 PM.jpeg",
-  "images/WhatsApp Image 2026-10-31 at 10.50.08 PM (1).jpeg",
-  "images/WhatsApp Image 2026-10-31 at 10.50.08 PM.jpeg",
-  "images/WhatsApp Image 2026-10-31 at 11.49.37 PM (1).jpeg",
-  "images/WhatsApp Image 2026-10-31 at 11.49.37 PM (2).jpeg",
-  "images/WhatsApp Image 2026-10-31 at 11.49.37 PM.jpeg",
-  "images/WhatsApp Image 2026-10-31 at 11.49.38 PM.jpeg",
-  "images/WhatsApp Image 2026-10-31 at 11.49.39 PM (1).jpeg",
-  "images/WhatsApp Image 2026-10-31 at 11.49.39 PM.jpeg",
-  "images/WhatsApp Image 2026-10-31 at 11.49.41 PM.jpeg"
+  'images/WhatsApp%20Image%202026-10-31%20at%2010.43.52%20PM.jpeg',
+  'images/WhatsApp%20Image%202026-10-31%20at%2010.43.54%20PM.jpeg',
+  'images/WhatsApp%20Image%202026-10-31%20at%2010.44.00%20PM.jpeg',
+  'images/WhatsApp%20Image%202026-10-31%20at%2011.49.39%20PM.jpeg',
+  'images/WhatsApp%20Image%202026-10-31%20at%2011.49.42%20PM.jpeg',
+  'images/WhatsApp%20Image%202026-10-31%20at%2011.49.43%20PM.jpeg',
+  'images/WhatsApp%20Image%202026-10-31%20at%2011.49.45%20PM.jpeg',
+  'images/WhatsApp%20Image%202026-10-31%20at%2011.49.48%20PM.jpeg'
 ];
 
 let audioCtx;
@@ -140,7 +58,8 @@ function createBackgroundGallery() {
     if (placement.right) polaroid.style.right = placement.right;
     if (placement.top) polaroid.style.top = placement.top;
     if (placement.bottom) polaroid.style.bottom = placement.bottom;
-    polaroid.style.transform = `rotate(${placement.rotate})`;
+    polaroid.style.setProperty('--tilt', placement.rotate);
+    polaroid.style.animationDelay = `${index * 0.18}s`;
 
     backgroundGallery.appendChild(polaroid);
   });
