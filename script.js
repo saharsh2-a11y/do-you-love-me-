@@ -210,37 +210,13 @@ musicBtn.addEventListener('click', toggleMusic);
 
 noBtn.addEventListener('mouseover', moveButton);
 noBtn.addEventListener('touchstart', moveButton);
-noBtn.addEventListener('focus', moveButton);
 
 function moveButton() {
-  if (!mainCard || !noBtn) return;
-
-  const cardRect = mainCard.getBoundingClientRect();
-  const offsetW = noBtn.offsetWidth || 120;
-  const offsetH = noBtn.offsetHeight || 52;
-
-  const centerX = cardRect.left + cardRect.width / 2 - offsetW / 2;
-  const centerY = cardRect.top + cardRect.height / 2 - offsetH / 2;
-
-  const driftX = 60;
-  const driftY = 32;
-
-  const x = centerX + (Math.random() - 0.5) * driftX;
-  const y = centerY + (Math.random() - 0.5) * driftY;
-
-  const minX = 18;
-  const maxX = window.innerWidth - offsetW - 18;
-  const minY = 18;
-  const maxY = window.innerHeight - offsetH - 18;
-
-  const finalX = Math.min(Math.max(x, minX), maxX);
-  const finalY = Math.min(Math.max(y, minY), maxY);
-
-  noBtn.style.position = 'fixed';
-  noBtn.style.left = `${finalX}px`;
-  noBtn.style.top = `${finalY}px`;
-  noBtn.style.transition = 'left 0.7s cubic-bezier(0.22, 1, 0.36, 1), top 0.7s cubic-bezier(0.22, 1, 0.36, 1), transform 0.2s ease';
-}
+  const x = Math.floor(Math.random() * (window.innerWidth - noBtn.offsetWidth));
+  const y = Math.floor(Math.random() * (window.innerHeight - noBtn.offsetHeight));
+  
+  noBtn.style.left = ${x}px;
+  noBtn.style.top = ${y}px;
 
 yesBtn.addEventListener('click', () => {
   if (mainCard.classList.contains('is-celebrating')) return;
