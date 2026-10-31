@@ -1,43 +1,44 @@
 const noBtn = document.getElementById('noBtn');
 const yesBtn = document.getElementById('yesBtn');
 const question = document.getElementById('question');
+const card = document.querySelector('.card');
 
 noBtn.addEventListener('mouseover', moveButton);
 noBtn.addEventListener('touchstart', moveButton);
+noBtn.addEventListener('focus', moveButton);
 
 function moveButton() {
-  const x = Math.floor(Math.random() * (window.innerWidth - noBtn.offsetWidth));
-  const y = Math.floor(Math.random() * (window.innerHeight - noBtn.offsetHeight));
+  const maxX = window.innerWidth - noBtn.offsetWidth - 30;
+  const maxY = window.innerHeight - noBtn.offsetHeight - 30;
+  const x = Math.max(20, Math.random() * maxX);
+  const y = Math.max(20, Math.random() * maxY);
 
+  noBtn.style.position = 'fixed';
   noBtn.style.left = `${x}px`;
   noBtn.style.top = `${y}px`;
 }
 
 yesBtn.addEventListener('click', () => {
+  card.classList.add('is-celebrating');
   question.innerHTML = 'I knew it! 🥰❤️';
   noBtn.style.display = 'none';
 
-  const heartColors = ['💖', '💗', '💕', '💞', '💘'];
-  for (let i = 0; i < 20; i++) {
+  const heartIcons = ['💖', '💗', '💕', '💞', '💘', '❤️'];
+
+  for (let i = 0; i < 26; i++) {
     const heart = document.createElement('div');
-    heart.textContent = heartColors[Math.floor(Math.random() * heartColors.length)];
-    heart.style.position = 'fixed';
-    heart.style.left = `${yesBtn.getBoundingClientRect().left + 30}px`;
-    heart.style.top = `${yesBtn.getBoundingClientRect().top + 10}px`;
-    heart.style.fontSize = '22px';
-    heart.style.pointerEvents = 'none';
-    heart.style.animation = 'floatHeart 1.2s ease-out forwards';
+    heart.classList.add('heart-particle');
+    heart.textContent = heartIcons[Math.floor(Math.random() * heartIcons.length)];
+
+    const startX = yesBtn.getBoundingClientRect().left + yesBtn.offsetWidth / 2;
+    const startY = yesBtn.getBoundingClientRect().top + yesBtn.offsetHeight / 2;
+
+    heart.style.left = `${startX}px`;
+    heart.style.top = `${startY}px`;
+    heart.style.setProperty('--dx', `${(Math.random() - 0.5) * 240}px`);
+
     document.body.appendChild(heart);
 
-    setTimeout(() => heart.remove(), 1200);
+    setTimeout(() => heart.remove(), 1400);
   }
 });
-
-const style = document.createElement('style');
-style.textContent = `
-@keyframes floatHeart {
-  0% { transform: translate(0, 0) scale(1); opacity: 1; }
-  100% { transform: translate(${(Math.random() - 0.5) * 150}px, -120px) scale(1.4); opacity: 0; }
-}
-`;
-document.head.appendChild(style);

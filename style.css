@@ -6,6 +6,7 @@
 
 :root {
   --bg-black: #000000;
+  --bg-deep: #050505;
   --card-dark: rgba(255, 255, 255, 0.06);
   --card-glow: rgba(255, 82, 143, 0.45);
   --pink: #ff4d8d;
@@ -22,7 +23,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  background: radial-gradient(circle at top, #1a1a1a 0%, var(--bg-black) 45%, #050505 100%);
+  background: radial-gradient(circle at top, #1a1a1a 0%, var(--bg-black) 45%, var(--bg-deep) 100%);
   font-family: Arial, sans-serif;
   overflow: hidden;
   position: relative;
@@ -32,9 +33,9 @@ body {
   position: absolute;
   inset: 0;
   background-image:
-    radial-gradient(circle, rgba(255,255,255,0.7) 1px, transparent 1px),
+    radial-gradient(circle, rgba(255, 255, 255, 0.7) 1px, transparent 1px),
     radial-gradient(circle, rgba(255, 77, 141, 0.8) 1px, transparent 1px),
-    radial-gradient(circle, rgba(255,255,255,0.5) 1px, transparent 1px);
+    radial-gradient(circle, rgba(255, 255, 255, 0.5) 1px, transparent 1px);
   background-size: 120px 120px;
   background-position: 0 0, 40px 60px, 80px 40px;
   opacity: 0.35;
@@ -59,6 +60,7 @@ body {
   box-shadow: 0 0 30px var(--card-glow), 0 20px 40px rgba(0, 0, 0, 0.4);
   border: 1px solid rgba(255, 255, 255, 0.08);
   backdrop-filter: blur(6px);
+  animation: fadeInUp 0.9s ease-out;
 }
 
 .card::before {
@@ -66,15 +68,48 @@ body {
   position: absolute;
   inset: -2px;
   border-radius: 26px;
-  background: linear-gradient(135deg, rgba(255, 77, 141, 0.2), rgba(255,255,255,0.05), rgba(255, 77, 141, 0.2));
+  background: linear-gradient(135deg, rgba(255, 77, 141, 0.2), rgba(255, 255, 255, 0.05), rgba(255, 77, 141, 0.2));
   z-index: -1;
 }
 
-.gif {
-  width: 180px;
-  margin-bottom: 20px;
-  border-radius: 18px;
-  box-shadow: 0 0 18px rgba(255, 77, 141, 0.35);
+.image-frame {
+  position: relative;
+  width: 200px;
+  height: 200px;
+  margin: 0 auto 18px;
+  border-radius: 22px;
+  overflow: hidden;
+  box-shadow: 0 0 25px rgba(255, 77, 141, 0.2);
+}
+
+.main-image,
+.celebration-image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 22px;
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.main-image {
+  opacity: 1;
+}
+
+.celebration-image {
+  opacity: 0;
+  transform: scale(1.08);
+}
+
+.card.is-celebrating .main-image {
+  opacity: 0;
+  transform: scale(1.08);
+}
+
+.card.is-celebrating .celebration-image {
+  opacity: 1;
+  transform: scale(1);
 }
 
 h1 {
@@ -88,6 +123,7 @@ h1 {
   position: relative;
   display: flex;
   justify-content: center;
+  align-items: center;
   gap: 20px;
   min-height: 52px;
 }
@@ -104,7 +140,7 @@ button {
 
 button:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
 }
 
 button:active {
@@ -113,16 +149,35 @@ button:active {
 
 #yesBtn {
   background: linear-gradient(135deg, var(--green), var(--green-dark));
-  color: white;
+  color: var(--white);
   box-shadow: 0 10px 20px rgba(76, 175, 80, 0.35);
 }
 
 #noBtn {
   position: absolute;
   background: linear-gradient(135deg, var(--red), var(--red-dark));
-  color: white;
+  color: var(--white);
   box-shadow: 0 10px 20px rgba(244, 67, 54, 0.35);
   transition: left 0.2s ease, top 0.2s ease, transform 0.2s ease;
+}
+
+.heart-particle {
+  position: fixed;
+  font-size: 22px;
+  pointer-events: none;
+  z-index: 40;
+  animation: floatHeart 1.4s ease-out forwards;
+}
+
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 @keyframes twinkle {
@@ -133,5 +188,16 @@ button:active {
   100% {
     opacity: 0.55;
     transform: scale(1.05);
+  }
+}
+
+@keyframes floatHeart {
+  0% {
+    transform: translate(0, 0) scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(var(--dx), -120px) scale(1.4);
+    opacity: 0;
   }
 }
