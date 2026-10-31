@@ -8,13 +8,39 @@ const loveNote = document.getElementById('loveNote');
 const musicBtn = document.getElementById('musicBtn');
 const backgroundGallery = document.getElementById('backgroundGallery');
 
-const personalLoveLetter = `My love,
+const personalLoveLetter = `You were the best unplanned thing that ever happened in my life.
 
-You are the sweetest part of my life, and every moment with you feels lighter, warmer, and more beautiful. I still smile when I think about you, and I thank my heart every day for choosing you.
+I never searched for you.
 
-I love your kindness, your smile, and the way you make the world feel softer just by being in it. I want to keep making memories with you, laughing together, and building a beautiful life full of love, warmth, and quiet joy.
+I never expected you.
 
-You are my forever, my favorite person, and my home. I love you more than words can say. 💖💌`;
+I never imagined that an ordinary day would introduce me to someone who would quietly change the way I looked at life.
+
+You came into my world without a warning, without a perfect plan, and without any promises.
+
+Yet somehow, you became one of the greatest blessings I have ever known.
+
+You taught me that not everything beautiful needs to be planned.
+
+Some of life's most precious moments happen.
+
+when we stop trying to control every detail and simply allow life to surprise us.
+
+You became my comfort on difficult days, my smile when life felt heavy, and the reminder that the universe sometimes knows exactly what we need before we do.
+
+If someone had asked me before we met what my future would look like, I would never have described you.
+
+And maybe that's the beauty of it. Because the best things in life rarely arrive when we're expecting them.
+
+They appear quietly, change us gently, and leave our hearts fuller than they were before.
+
+So if there's one thing I'll always be grateful for,
+
+it's that life didn't follow my plans.
+
+Because if it had, I might never have met you-the most beautiful, unexpected chapter of my story.
+
+♡`;
 
 const galleryImages = [
   "images/WhatsApp Image 2026-10-31 at 10.43.52 PM.jpeg",
