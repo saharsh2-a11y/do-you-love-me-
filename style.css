@@ -36,8 +36,11 @@ body {
 }
 
 body.after-yes {
-  background: radial-gradient(circle at top, #1a1a1a 0%, var(--bg-black) 45%, var(--bg-deep) 100%);
-  filter: none;
+  background:
+    linear-gradient(var(--bw-overlay), var(--bw-overlay)),
+    url('WhatsApp Image 2026-10-29 at 4.08.44 PM.jpeg') center/cover no-repeat,
+    url('WhatsApp Image 2026-10-29 at 4.13.10 PM.jpeg') center/cover no-repeat;
+  filter: grayscale(1) contrast(1.1);
 }
 
 .sparkles,
@@ -292,3 +295,4 @@ button:active {
     font-size: 1rem;
   }
 }
+
