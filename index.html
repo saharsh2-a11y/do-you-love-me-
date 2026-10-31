@@ -11,38 +11,45 @@
     <div class="romantic-pattern" aria-hidden="true"></div>
 
     <div class="container">
-      <div class="card" aria-live="polite">
-        <div class="image-frame">
-          <img
-            src="WhatsApp Image 2026-10-29 at 4.08.44 PM.jpeg"
-            alt="Cute romantic moment"
-            class="main-image"
-          />
-          <img
-            src="WhatsApp Image 2026-10-29 at 4.13.10 PM.jpeg"
-            alt="Happy romantic celebration"
-            class="celebration-image"
-          />
-        </div>
-
-        <h1 id="question">Do you love me? ❤️</h1>
-
-        <div class="love-note" id="loveNote">
-          You are my favorite person, my forever, and my happy place 💖
-        </div>
-
-        <div class="love-letter" id="loveLetter">
-          My love, you are the sweetest part of my life. Every day with you feels warmer, brighter, and more beautiful. I choose you with all my heart, in every smile, every moment, and every dream of tomorrow. You are my home, my happiness, and my forever. 💗💖
-        </div>
-
-        <div class="buttons-row">
-          <div class="buttons">
-            <button id="yesBtn" type="button">YES</button>
-            <button id="noBtn" type="button">NO</button>
+      <div class="card-stack">
+        <div class="card main-card" id="mainCard" aria-live="polite">
+          <div class="image-frame">
+            <img
+              src="WhatsApp Image 2026-10-29 at 4.08.44 PM.jpeg"
+              alt="Cute romantic moment"
+              class="main-image"
+            />
+            <img
+              src="WhatsApp Image 2026-10-29 at 4.13.10 PM.jpeg"
+              alt="Happy romantic celebration"
+              class="celebration-image"
+            />
           </div>
-          <button id="musicBtn" class="music-btn" type="button" aria-label="Toggle background music">
-            ♫ Music
-          </button>
+
+          <h1 id="question">Do you love me? ❤️</h1>
+
+          <div class="love-note" id="loveNote">
+            You are my favorite person, my forever, and my happy place 💖
+          </div>
+
+          <div class="buttons-row">
+            <div class="buttons">
+              <button id="yesBtn" type="button">YES</button>
+              <button id="noBtn" type="button">NO</button>
+            </div>
+            <button id="musicBtn" class="music-btn" type="button" aria-label="Toggle background music">
+              ♫ Music
+            </button>
+          </div>
+        </div>
+
+        <div class="card love-card" id="loveCard" hidden>
+          <div class="love-card-header">My Love Letter 💌</div>
+          <p>
+            My love, you are the sweetest part of my life. Every day with you feels warmer, brighter,
+            and more beautiful. I choose you with all my heart, in every smile, every moment, and every
+            dream of tomorrow. You are my home, my happiness, and my forever. 💗💖
+          </p>
         </div>
       </div>
     </div>

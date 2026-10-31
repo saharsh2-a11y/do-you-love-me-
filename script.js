@@ -1,7 +1,8 @@
 const noBtn = document.getElementById('noBtn');
 const yesBtn = document.getElementById('yesBtn');
 const question = document.getElementById('question');
-const card = document.querySelector('.card');
+const mainCard = document.getElementById('mainCard');
+const loveCard = document.getElementById('loveCard');
 const loveNote = document.getElementById('loveNote');
 const musicBtn = document.getElementById('musicBtn');
 
@@ -70,7 +71,7 @@ noBtn.addEventListener('touchstart', moveButton);
 noBtn.addEventListener('focus', moveButton);
 
 function moveButton() {
-  const cardRect = card.getBoundingClientRect();
+  const cardRect = mainCard.getBoundingClientRect();
   const centerX = cardRect.left + cardRect.width / 2;
   const centerY = cardRect.top + cardRect.height / 2;
 
@@ -94,10 +95,13 @@ function moveButton() {
 }
 
 yesBtn.addEventListener('click', () => {
-  card.classList.add('is-celebrating');
+  mainCard.classList.add('is-celebrating');
   question.innerHTML = 'I knew it! 🥰❤️';
   loveNote.style.display = 'block';
   noBtn.style.display = 'none';
+
+  loveCard.hidden = false;
+  loveCard.classList.add('show');
 
   const heartIcons = ['💖', '💗', '💕', '💞', '💘', '❤️', '💓'];
 
