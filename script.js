@@ -9,26 +9,27 @@ noBtn.addEventListener('touchstart', moveButton);
 noBtn.addEventListener('focus', moveButton);
 
 function moveButton() {
-  const rect = document.querySelector('.card').getBoundingClientRect();
-  const centerX = rect.left + rect.width / 2;
-  const centerY = rect.top + rect.height / 2;
+  const cardRect = card.getBoundingClientRect();
+  const centerX = cardRect.left + cardRect.width / 2;
+  const centerY = cardRect.top + cardRect.height / 2;
 
-  const offsetX = (Math.random() - 0.5) * 180;
-  const offsetY = (Math.random() - 0.5) * 120;
+  const offsetX = (Math.random() - 0.5) * 150;
+  const offsetY = (Math.random() - 0.5) * 80;
 
   const x = Math.min(
-    window.innerWidth - noBtn.offsetWidth - 20,
-    Math.max(20, centerX + offsetX)
+    cardRect.left + cardRect.width - noBtn.offsetWidth - 18,
+    Math.max(cardRect.left + 18, centerX + offsetX)
   );
 
   const y = Math.min(
-    window.innerHeight - noBtn.offsetHeight - 20,
-    Math.max(20, centerY + offsetY)
+    cardRect.top + cardRect.height - noBtn.offsetHeight - 18,
+    Math.max(cardRect.top + 18, centerY + offsetY)
   );
 
   noBtn.style.position = 'fixed';
   noBtn.style.left = `${x}px`;
   noBtn.style.top = `${y}px`;
+  noBtn.style.transition = 'left 0.45s ease, top 0.45s ease';
 }
 
 yesBtn.addEventListener('click', () => {
@@ -79,4 +80,3 @@ for (let i = 0; i < 25; i++) {
 setInterval(() => {
   createFallingHeart();
 }, 600);
-

@@ -80,6 +80,7 @@ body {
   border: 1px solid rgba(255, 255, 255, 0.08);
   backdrop-filter: blur(6px);
   animation: fadeInUp 0.9s ease-out;
+  transition: transform 0.5s ease, box-shadow 0.5s ease;
 }
 
 .card::before {
@@ -174,7 +175,7 @@ button {
   border: none;
   border-radius: 25px;
   cursor: pointer;
-  transition: transform 0.18s ease, box-shadow 0.2s ease;
+  transition: transform 0.18s ease, box-shadow 0.2s ease, left 0.35s ease, top 0.35s ease;
 }
 
 button:hover {
@@ -197,7 +198,6 @@ button:active {
   background: linear-gradient(135deg, var(--red), var(--red-dark));
   color: var(--white);
   box-shadow: 0 10px 20px rgba(244, 67, 54, 0.35);
-  transition: left 0.2s ease, top 0.2s ease, transform 0.2s ease;
 }
 
 .heart-particle,
