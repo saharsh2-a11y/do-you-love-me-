@@ -119,30 +119,21 @@ loveMessage.textContent = personalLoveLetter;
 function createBackgroundGallery() {
   backgroundGallery.innerHTML = '';
 
-  const placements = [
-    { left: '8%', top: '4%', rotate: '-10' },
-    { right: '8%', top: '10%', rotate: '9' },
-    { left: '18%', bottom: '12%', rotate: '7' },
-    { right: '12%', bottom: '16%', rotate: '-8' },
-    { left: '48%', top: '46%', rotate: '3' },
-    { left: '10%', top: '46%', rotate: '-5' },
-    { right: '18%', top: '48%', rotate: '6' },
-    { left: '60%', bottom: '16%', rotate: '-9' }
-  ];
-
   galleryImages.forEach((image, index) => {
     const polaroid = document.createElement('div');
     polaroid.className = 'polaroid';
     polaroid.style.backgroundImage = `url("${image}")`;
-    polaroid.style.setProperty('--delay', index);
-    polaroid.style.setProperty('--tilt', `${placements[index % placements.length].rotate}deg`);
 
-    const placement = placements[index % placements.length];
-    if (placement.left) polaroid.style.left = placement.left;
-    if (placement.right) polaroid.style.right = placement.right;
-    if (placement.top) polaroid.style.top = placement.top;
-    if (placement.bottom) polaroid.style.bottom = placement.bottom;
-    polaroid.style.transform = `rotate(${placement.rotate}deg)`;
+    const angle = (Math.random() * 28) - 14;
+    const left = 4 + Math.random() * 82;
+    const top = -(10 + Math.random() * 22);
+
+    polaroid.style.left = `${left}%`;
+    polaroid.style.top = `${top}%`;
+    polaroid.style.setProperty('--angle', `${angle}deg`);
+    polaroid.style.setProperty('--driftX', `${(Math.random() - 0.5) * 90}px`);
+    polaroid.style.setProperty('--dropY', `${(Math.random() * 80) + 28}px`);
+    polaroid.style.animationDelay = `${index * 0.12}s`;
 
     backgroundGallery.appendChild(polaroid);
   });
