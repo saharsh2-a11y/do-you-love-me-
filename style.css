@@ -144,15 +144,19 @@ h1 {
   text-shadow: 0 0 12px rgba(255,122,173,0.35);
 }
 
+.love-note,
+.love-letter {
+  max-width: 320px;
+  margin: 0 auto 18px;
+  color: rgba(255,255,255,0.92);
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
 .love-note {
   opacity: 0;
   height: 0;
   overflow: hidden;
-  margin: 0 auto 18px;
-  max-width: 320px;
-  color: rgba(255,255,255,0.92);
-  font-size: 1rem;
-  line-height: 1.5;
   transition: opacity 0.4s ease, height 0.4s ease, transform 0.4s ease;
   transform: translateY(10px);
 }
@@ -161,6 +165,23 @@ h1 {
   opacity: 1;
   height: auto;
   transform: translateY(0);
+}
+
+.love-letter {
+  opacity: 0;
+  max-height: 0;
+  overflow: hidden;
+  margin-top: -6px;
+  padding: 0 4px;
+  color: #ffe6f1;
+  text-align: center;
+  transition: opacity 0.5s ease, max-height 0.8s ease, margin-top 0.5s ease;
+}
+
+.card.is-celebrating .love-letter {
+  opacity: 1;
+  max-height: 300px;
+  margin-top: 8px;
 }
 
 .buttons-row {

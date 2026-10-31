@@ -99,10 +99,6 @@ yesBtn.addEventListener('click', () => {
   loveNote.style.display = 'block';
   noBtn.style.display = 'none';
 
-  if (isMusicPlaying) {
-    musicBtn.classList.add('is-playing');
-  }
-
   const heartIcons = ['💖', '💗', '💕', '💞', '💘', '❤️', '💓'];
 
   for (let i = 0; i < 40; i++) {
