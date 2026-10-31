@@ -2,6 +2,7 @@ const noBtn = document.getElementById('noBtn');
 const yesBtn = document.getElementById('yesBtn');
 const question = document.getElementById('question');
 const card = document.querySelector('.card');
+const loveNote = document.getElementById('loveNote');
 
 noBtn.addEventListener('mouseover', moveButton);
 noBtn.addEventListener('touchstart', moveButton);
@@ -21,11 +22,12 @@ function moveButton() {
 yesBtn.addEventListener('click', () => {
   card.classList.add('is-celebrating');
   question.innerHTML = 'I knew it! 🥰❤️';
+  loveNote.style.display = 'block';
   noBtn.style.display = 'none';
 
-  const heartIcons = ['💖', '💗', '💕', '💞', '💘', '❤️'];
+  const heartIcons = ['💖', '💗', '💕', '💞', '💘', '❤️', '💓'];
 
-  for (let i = 0; i < 26; i++) {
+  for (let i = 0; i < 40; i++) {
     const heart = document.createElement('div');
     heart.classList.add('heart-particle');
     heart.textContent = heartIcons[Math.floor(Math.random() * heartIcons.length)];
@@ -35,10 +37,11 @@ yesBtn.addEventListener('click', () => {
 
     heart.style.left = `${startX}px`;
     heart.style.top = `${startY}px`;
-    heart.style.setProperty('--dx', `${(Math.random() - 0.5) * 240}px`);
+    heart.style.setProperty('--dx', `${(Math.random() - 0.5) * 280}px`);
+    heart.style.setProperty('--dy', `${-220 - Math.random() * 180}px`);
 
     document.body.appendChild(heart);
 
-    setTimeout(() => heart.remove(), 1400);
+    setTimeout(() => heart.remove(), 1600);
   }
 });
