@@ -16,6 +16,7 @@
   --green: #4caf50;
   --green-dark: #2e7d32;
   --white: #ffffff;
+  --bw-overlay: rgba(0, 0, 0, 0.68);
 }
 
 html, body {
@@ -31,6 +32,15 @@ body {
   font-family: Arial, sans-serif;
   overflow: hidden;
   position: relative;
+  transition: background 0.8s ease, filter 0.8s ease;
+}
+
+body.after-yes {
+  background:
+    linear-gradient(var(--bw-overlay), var(--bw-overlay)),
+    url('WhatsApp Image 2026-10-29 at 4.08.44 PM.jpeg') center/cover no-repeat,
+    url('WhatsApp Image 2026-10-29 at 4.13.10 PM.jpeg') center/cover no-repeat;
+  filter: grayscale(1) contrast(1.1);
 }
 
 .sparkles,
@@ -80,6 +90,12 @@ body {
   border: 1px solid rgba(255, 255, 255, 0.08);
   backdrop-filter: blur(6px);
   animation: fadeInUp 0.9s ease-out;
+  transition: transform 0.5s ease, box-shadow 0.5s ease;
+}
+
+body.after-yes .card {
+  transform: scale(1.04);
+  box-shadow: 0 0 35px rgba(255, 255, 255, 0.12), 0 20px 40px rgba(0, 0, 0, 0.5);
 }
 
 .card::before {
