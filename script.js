@@ -9,10 +9,22 @@ noBtn.addEventListener('touchstart', moveButton);
 noBtn.addEventListener('focus', moveButton);
 
 function moveButton() {
-  const maxX = window.innerWidth - noBtn.offsetWidth - 30;
-  const maxY = window.innerHeight - noBtn.offsetHeight - 30;
-  const x = Math.max(20, Math.random() * maxX);
-  const y = Math.max(20, Math.random() * maxY);
+  const rect = document.querySelector('.card').getBoundingClientRect();
+  const centerX = rect.left + rect.width / 2;
+  const centerY = rect.top + rect.height / 2;
+
+  const offsetX = (Math.random() - 0.5) * 180;
+  const offsetY = (Math.random() - 0.5) * 120;
+
+  const x = Math.min(
+    window.innerWidth - noBtn.offsetWidth - 20,
+    Math.max(20, centerX + offsetX)
+  );
+
+  const y = Math.min(
+    window.innerHeight - noBtn.offsetHeight - 20,
+    Math.max(20, centerY + offsetY)
+  );
 
   noBtn.style.position = 'fixed';
   noBtn.style.left = `${x}px`;
@@ -21,7 +33,7 @@ function moveButton() {
 
 yesBtn.addEventListener('click', () => {
   card.classList.add('is-celebrating');
-  question.innerHTML = 'love you moree gabbu 🥰❤️';
+  question.innerHTML = 'I knew it! 🥰❤️';
   loveNote.style.display = 'block';
   noBtn.style.display = 'none';
 
