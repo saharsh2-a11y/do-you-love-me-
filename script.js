@@ -21,7 +21,7 @@ function moveButton() {
 
 yesBtn.addEventListener('click', () => {
   card.classList.add('is-celebrating');
-  question.innerHTML = 'I knew it! 🥰❤️';
+  question.innerHTML = 'love you moree gabbu 🥰❤️';
   loveNote.style.display = 'block';
   noBtn.style.display = 'none';
 
