@@ -3,12 +3,23 @@ const yesBtn = document.getElementById('yesBtn');
 const question = document.getElementById('question');
 const mainCard = document.getElementById('mainCard');
 const loveCard = document.getElementById('loveCard');
+const loveMessage = document.getElementById('loveMessage');
 const loveNote = document.getElementById('loveNote');
 const musicBtn = document.getElementById('musicBtn');
+
+const personalLoveLetter = `My love,
+
+You are the sweetest part of my life, and every moment with you feels lighter, warmer, and more beautiful. I still smile when I think about you, and I thank my heart every day for choosing you. You are not just someone I love — you are my comfort, my joy, my safe place, and the person I want to keep choosing in every season of life.
+
+I love your kindness, your smile, and the way you make the world feel softer just by being in it. Every dream I have feels brighter because you are in it. I want to keep making memories with you, laughing with you, growing with you, and loving you with all my heart.
+
+You are my forever, my favorite person, and my home. I love you more than words can say. 💖💌`;
 
 let audioCtx;
 let isMusicPlaying = false;
 let melodyTimer = null;
+
+loveMessage.textContent = personalLoveLetter;
 
 function createMelody() {
   const notes = [261.63, 329.63, 392.0, 329.63, 349.23, 440.0, 392.0, 329.63];
@@ -72,25 +83,23 @@ noBtn.addEventListener('focus', moveButton);
 
 function moveButton() {
   const cardRect = mainCard.getBoundingClientRect();
-  const centerX = cardRect.left + cardRect.width / 2;
-  const centerY = cardRect.top + cardRect.height / 2;
+  const centerX = cardRect.left + cardRect.width / 2 - noBtn.offsetWidth / 2;
+  const centerY = cardRect.top + cardRect.height / 2 - noBtn.offsetHeight / 2;
 
-  const offsetX = (Math.random() - 0.5) * 120;
-  const offsetY = (Math.random() - 0.5) * 70;
+  const driftX = 50;
+  const driftY = 28;
 
-  const x = Math.min(
-    cardRect.left + cardRect.width - noBtn.offsetWidth - 18,
-    Math.max(cardRect.left + 18, centerX + offsetX)
-  );
+  const x = centerX + (Math.random() - 0.5) * driftX;
+  const y = centerY + (Math.random() - 0.5) * driftY;
 
-  const y = Math.min(
-    cardRect.top + cardRect.height - noBtn.offsetHeight - 18,
-    Math.max(cardRect.top + 18, centerY + offsetY)
-  );
+  const minX = cardRect.left + 16;
+  const maxX = cardRect.right - noBtn.offsetWidth - 16;
+  const minY = cardRect.top + 16;
+  const maxY = cardRect.bottom - noBtn.offsetHeight - 16;
 
   noBtn.style.position = 'fixed';
-  noBtn.style.left = `${x}px`;
-  noBtn.style.top = `${y}px`;
+  noBtn.style.left = `${Math.min(Math.max(x, minX), maxX)}px`;
+  noBtn.style.top = `${Math.min(Math.max(y, minY), maxY)}px`;
   noBtn.style.transition = 'left 0.45s ease, top 0.45s ease';
 }
 
@@ -102,6 +111,10 @@ yesBtn.addEventListener('click', () => {
 
   loveCard.hidden = false;
   loveCard.classList.add('show');
+
+  setTimeout(() => {
+    loveCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }, 200);
 
   const heartIcons = ['💖', '💗', '💕', '💞', '💘', '❤️', '💓'];
 

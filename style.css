@@ -7,21 +7,18 @@
 :root {
   --bg-black: #050505;
   --bg-deep: #0b0b12;
-  --card-glow: rgba(255, 170, 200, 0.42);
-  --card-dark: rgba(255, 255, 255, 0.07);
   --pink: #ff7aad;
   --pink-deep: #ff5ea8;
   --lavender: #d9c7ff;
-  --rose: #ffd7e8;
-  --red: #f44336;
-  --red-dark: #d32f2f;
   --green: #67d38a;
   --green-dark: #2e9f57;
+  --red: #f44336;
+  --red-dark: #d32f2f;
   --white: #ffffff;
 }
 
-html, body {
-  height: 100%;
+html {
+  scroll-behavior: smooth;
 }
 
 body {
@@ -31,13 +28,13 @@ body {
   align-items: center;
   background: radial-gradient(circle at top, #1e1b2c 0%, var(--bg-black) 45%, var(--bg-deep) 100%);
   font-family: Arial, sans-serif;
-  overflow: hidden;
+  overflow-x: hidden;
   position: relative;
 }
 
 .sparkles,
 .romantic-pattern {
-  position: absolute;
+  position: fixed;
   inset: 0;
   pointer-events: none;
 }
@@ -68,14 +65,15 @@ body {
   justify-content: center;
   align-items: center;
   width: 100%;
-  padding: 20px;
+  min-height: 100vh;
+  padding: 40px 20px;
 }
 
 .card-stack {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 22px;
+  gap: 24px;
   width: min(90vw, 430px);
 }
 
@@ -92,7 +90,7 @@ body {
     0 20px 40px rgba(0,0,0,0.38);
   backdrop-filter: blur(8px);
   animation: fadeInUp 0.9s ease-out;
-  transition: transform 0.5s ease, box-shadow 0.5s ease, opacity 0.4s ease;
+  transition: transform 0.5s ease, box-shadow 0.5s ease, opacity 0.45s ease;
 }
 
 .card::before {
@@ -100,7 +98,7 @@ body {
   position: absolute;
   inset: -2px;
   border-radius: 30px;
-  background: linear-gradient(135deg, rgba(255,122,173,0.22), rgba(255,255,255,0.05), rgba(217,199,255,0.18));
+  background: linear-gradient(135deg, rgba(255,122,173,0.18), rgba(255,255,255,0.04), rgba(217,199,255,0.16));
   z-index: -1;
 }
 
@@ -109,8 +107,8 @@ body {
 }
 
 .main-card.is-celebrating {
-  opacity: 0.9;
-  transform: scale(0.98);
+  opacity: 0.96;
+  transform: scale(0.985);
 }
 
 .image-frame {
@@ -190,7 +188,7 @@ h1 {
 
 .love-card.show {
   display: block;
-  animation: revealLetter 0.7s ease forwards;
+  animation: revealLetter 0.75s ease forwards;
 }
 
 .love-card-header {
@@ -205,6 +203,7 @@ h1 {
   line-height: 1.8;
   font-size: 1rem;
   text-align: center;
+  white-space: pre-line;
 }
 
 .buttons-row {
