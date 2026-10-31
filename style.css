@@ -60,11 +60,16 @@ body {
 }
 
 .background-gallery {
-  z-index: 0;
-  display: grid;
-  place-items: center;
-  opacity: 0.72;
-  filter: grayscale(1) contrast(1.12);
+  z-index: 1;
+  display: block;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.8s ease, visibility 0.8s ease;
+}
+
+.background-gallery.show {
+  opacity: 1;
+  visibility: visible;
 }
 
 .polaroid {
@@ -76,6 +81,8 @@ body {
   border: 10px solid rgba(255,255,255,0.8);
   box-shadow: 0 12px 24px rgba(0,0,0,0.25);
   transform-origin: center;
+  filter: grayscale(1) contrast(1.15) brightness(0.9);
+  opacity: 0.9;
 }
 
 .polaroid::after {
@@ -85,46 +92,9 @@ body {
   background: rgba(255,255,255,0.06);
 }
 
-.p1 {
-  left: 7%;
-  top: 12%;
-  background-image: url("WhatsApp Image 2026-10-29 at 4.08.44 PM.jpeg");
-  transform: rotate(-9deg);
-}
-
-.p2 {
-  right: 10%;
-  top: 18%;
-  background-image: url("WhatsApp Image 2026-10-29 at 4.13.10 PM.jpeg");
-  transform: rotate(8deg);
-}
-
-.p3 {
-  left: 18%;
-  bottom: 12%;
-  background-image: url("WhatsApp Image 2026-10-29 at 4.08.44 PM.jpeg");
-  transform: rotate(7deg);
-}
-
-.p4 {
-  right: 18%;
-  bottom: 18%;
-  background-image: url("WhatsApp Image 2026-10-29 at 4.13.10 PM.jpeg");
-  transform: rotate(-6deg);
-}
-
-.p5 {
-  left: 50%;
-  top: 50%;
-  width: clamp(140px, 20vw, 200px);
-  height: clamp(160px, 24vw, 240px);
-  transform: translate(-50%, -50%) rotate(3deg);
-  background-image: url("WhatsApp Image 2026-10-29 at 4.08.44 PM.jpeg");
-}
-
 .container {
   position: relative;
-  z-index: 1;
+  z-index: 10;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -338,7 +308,7 @@ button:active {
 .falling-heart {
   position: fixed;
   pointer-events: none;
-  z-index: 40;
+  z-index: 5;
 }
 
 .heart-particle {

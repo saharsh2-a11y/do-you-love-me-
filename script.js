@@ -6,6 +6,7 @@ const loveCard = document.getElementById('loveCard');
 const loveMessage = document.getElementById('loveMessage');
 const loveNote = document.getElementById('loveNote');
 const musicBtn = document.getElementById('musicBtn');
+const backgroundGallery = document.getElementById('backgroundGallery');
 
 const personalLoveLetter = `My love,
 
@@ -15,11 +16,64 @@ I love your kindness, your smile, and the way you make the world feel softer jus
 
 You are my forever, my favorite person, and my home. I love you more than words can say. 💖💌`;
 
+const galleryImages = [
+  'images/WhatsApp%20Image%202026-10-31%20at%2010.43.52%20PM.jpeg',
+  'images/WhatsApp%20Image%202026-10-31%20at%2010.43.54%20PM.jpeg',
+  'images/WhatsApp%20Image%202026-10-31%20at%2010.44.00%20PM.jpeg',
+  'images/WhatsApp%20Image%202026-10-31%20at%2011.49.39%20PM.jpeg',
+  'images/WhatsApp%20Image%202026-10-31%20at%2011.49.42%20PM.jpeg',
+  'images/WhatsApp%20Image%202026-10-31%20at%2011.49.43%20PM.jpeg',
+  'images/WhatsApp%20Image%202026-10-31%20at%2011.49.45%20PM.jpeg',
+  'images/WhatsApp%20Image%202026-10-31%20at%2011.49.48%20PM.jpeg'
+];
+
 let audioCtx;
 let isMusicPlaying = false;
 let melodyTimer = null;
+let heartsInterval = null;
 
 loveMessage.textContent = personalLoveLetter;
+
+function createBackgroundGallery() {
+  backgroundGallery.innerHTML = '';
+
+  const placements = [
+    { left: '8%', top: '4%', rotate: '-10deg' },
+    { right: '8%', top: '10%', rotate: '9deg' },
+    { left: '18%', bottom: '12%', rotate: '7deg' },
+    { right: '12%', bottom: '16%', rotate: '-8deg' },
+    { left: '48%', top: '46%', rotate: '3deg' },
+    { left: '10%', top: '46%', rotate: '-5deg' },
+    { right: '18%', top: '48%', rotate: '6deg' },
+    { left: '60%', bottom: '16%', rotate: '-9deg' }
+  ];
+
+  galleryImages.forEach((image, index) => {
+    const polaroid = document.createElement('div');
+    polaroid.className = 'polaroid';
+    polaroid.style.backgroundImage = `url("${image}")`;
+
+    const placement = placements[index % placements.length];
+    if (placement.left) polaroid.style.left = placement.left;
+    if (placement.right) polaroid.style.right = placement.right;
+    if (placement.top) polaroid.style.top = placement.top;
+    if (placement.bottom) polaroid.style.bottom = placement.bottom;
+    polaroid.style.transform = `rotate(${placement.rotate})`;
+
+    backgroundGallery.appendChild(polaroid);
+  });
+}
+
+function startBackgroundScene() {
+  createBackgroundGallery();
+  backgroundGallery.classList.add('show');
+
+  if (heartsInterval) clearInterval(heartsInterval);
+
+  heartsInterval = setInterval(() => {
+    createFallingHeart();
+  }, 550);
+}
 
 function createMelody() {
   const notes = [261.63, 329.63, 392.0, 329.63, 349.23, 440.0, 392.0, 329.63];
@@ -109,6 +163,8 @@ yesBtn.addEventListener('click', () => {
   loveNote.style.display = 'block';
   noBtn.style.display = 'none';
 
+  startBackgroundScene();
+
   loveCard.hidden = false;
   loveCard.classList.add('show');
 
@@ -148,10 +204,6 @@ function createFallingHeart() {
   setTimeout(() => heart.remove(), 8000);
 }
 
-for (let i = 0; i < 25; i++) {
-  setTimeout(createFallingHeart, i * 240);
+for (let i = 0; i < 6; i++) {
+  setTimeout(() => createFallingHeart(), i * 260);
 }
-
-setInterval(() => {
-  createFallingHeart();
-}, 600);
