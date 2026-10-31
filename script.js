@@ -155,8 +155,10 @@ function startBackgroundScene() {
   if (heartsInterval) clearInterval(heartsInterval);
 
   heartsInterval = setInterval(() => {
-    createFallingHeart();
-  }, 550);
+    for (let i = 0; i < 3; i++) {
+      createFallingHeart();
+    }
+  }, 220);
 }
 
 function createMelody() {
@@ -229,8 +231,8 @@ function moveButton() {
   const centerX = cardRect.left + cardRect.width / 2 - offsetW / 2;
   const centerY = cardRect.top + cardRect.height / 2 - offsetH / 2;
 
-  const driftX = 48;
-  const driftY = 26;
+  const driftX = 60;
+  const driftY = 32;
 
   const x = centerX + (Math.random() - 0.5) * driftX;
   const y = centerY + (Math.random() - 0.5) * driftY;
@@ -240,10 +242,13 @@ function moveButton() {
   const minY = 18;
   const maxY = window.innerHeight - offsetH - 18;
 
+  const finalX = Math.min(Math.max(x, minX), maxX);
+  const finalY = Math.min(Math.max(y, minY), maxY);
+
   noBtn.style.position = 'fixed';
-  noBtn.style.left = `${Math.min(Math.max(x, minX), maxX)}px`;
-  noBtn.style.top = `${Math.min(Math.max(y, minY), maxY)}px`;
-  noBtn.style.transition = 'left 0.45s ease, top 0.45s ease';
+  noBtn.style.left = `${finalX}px`;
+  noBtn.style.top = `${finalY}px`;
+  noBtn.style.transition = 'left 0.7s cubic-bezier(0.22, 1, 0.36, 1), top 0.7s cubic-bezier(0.22, 1, 0.36, 1), transform 0.2s ease';
 }
 
 yesBtn.addEventListener('click', () => {
@@ -261,7 +266,7 @@ yesBtn.addEventListener('click', () => {
 
   const heartIcons = ['💖', '💗', '💕', '💞', '💘', '❤️', '💓'];
 
-  for (let i = 0; i < 40; i++) {
+  for (let i = 0; i < 50; i++) {
     const heart = document.createElement('div');
     heart.classList.add('heart-particle');
     heart.textContent = heartIcons[Math.floor(Math.random() * heartIcons.length)];
@@ -271,12 +276,12 @@ yesBtn.addEventListener('click', () => {
 
     heart.style.left = `${startX}px`;
     heart.style.top = `${startY}px`;
-    heart.style.setProperty('--dx', `${(Math.random() - 0.5) * 280}px`);
-    heart.style.setProperty('--dy', `${-220 - Math.random() * 180}px`);
+    heart.style.setProperty('--dx', `${(Math.random() - 0.5) * 320}px`);
+    heart.style.setProperty('--dy', `${-260 - Math.random() * 220}px`);
 
     document.body.appendChild(heart);
 
-    setTimeout(() => heart.remove(), 1600);
+    setTimeout(() => heart.remove(), 1700);
   }
 });
 
@@ -286,15 +291,15 @@ function createFallingHeart() {
   heart.textContent = ['💖', '💗', '💘', '💝', '💕'][Math.floor(Math.random() * 5)];
   heart.style.left = `${Math.random() * 100}vw`;
   heart.style.top = '-10vh';
-  heart.style.setProperty('--drift', `${(Math.random() - 0.5) * 200}px`);
+  heart.style.setProperty('--drift', `${(Math.random() - 0.5) * 260}px`);
   heart.style.animationDelay = `${Math.random() * 6}s`;
-  heart.style.fontSize = `${Math.random() * 18 + 14}px`;
+  heart.style.fontSize = `${Math.random() * 18 + 18}px`;
 
   document.body.appendChild(heart);
 
-  setTimeout(() => heart.remove(), 8000);
+  setTimeout(() => heart.remove(), 9000);
 }
 
-for (let i = 0; i < 6; i++) {
-  setTimeout(() => createFallingHeart(), i * 260);
+for (let i = 0; i < 9; i++) {
+  setTimeout(() => createFallingHeart(), i * 180);
 }
