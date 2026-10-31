@@ -6,19 +6,17 @@ const question = document.getElementById('question');
 function moveButton(e) {
   e.preventDefault();
   
-  // Calculate a random spot within the browser window padding margins
-  const padding = 50;
-  const x = Math.floor(Math.random() * (window.innerWidth - noBtn.offsetWidth - padding * 2)) + padding;
-  const y = Math.floor(Math.random() * (window.innerHeight - noBtn.offsetHeight - padding * 2)) + padding;
-  
-  // Switch to fixed body coordinate layout so it can travel smoothly outside the card boundaries
-  noBtn.style.position = 'fixed';
-  noBtn.style.left = `${x}px`;
-  noBtn.style.top = `${y}px`;
-}
-
+  // Make the "NO" button run away on hover/touch
 noBtn.addEventListener('mouseover', moveButton);
 noBtn.addEventListener('touchstart', moveButton);
+
+function moveButton() {
+  const x = Math.floor(Math.random() * (window.innerWidth - noBtn.offsetWidth));
+  const y = Math.floor(Math.random() * (window.innerHeight - noBtn.offsetHeight));
+  
+  noBtn.style.left = ${x}px;
+  noBtn.style.top = ${y}px;
+}
 
 // Show romantic celebration when YES is clicked
 yesBtn.addEventListener('click', () => {
