@@ -86,8 +86,8 @@ function moveButton() {
   const centerX = cardRect.left + cardRect.width / 2 - noBtn.offsetWidth / 2;
   const centerY = cardRect.top + cardRect.height / 2 - noBtn.offsetHeight / 2;
 
-  const driftX = 50;
-  const driftY = 28;
+  const driftX = 48;
+  const driftY = 26;
 
   const x = centerX + (Math.random() - 0.5) * driftX;
   const y = centerY + (Math.random() - 0.5) * driftY;
@@ -111,10 +111,6 @@ yesBtn.addEventListener('click', () => {
 
   loveCard.hidden = false;
   loveCard.classList.add('show');
-
-  setTimeout(() => {
-    loveCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  }, 200);
 
   const heartIcons = ['💖', '💗', '💕', '💞', '💘', '❤️', '💓'];
 
