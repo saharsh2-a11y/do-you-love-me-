@@ -45,3 +45,25 @@ yesBtn.addEventListener('click', () => {
     setTimeout(() => heart.remove(), 1600);
   }
 });
+
+function createFallingHeart() {
+  const heart = document.createElement('div');
+  heart.classList.add('falling-heart');
+  heart.textContent = ['💖', '💗', '💘', '💝', '💕'][Math.floor(Math.random() * 5)];
+  heart.style.left = `${Math.random() * 100}vw`;
+  heart.style.top = '-10vh';
+  heart.style.setProperty('--drift', `${(Math.random() - 0.5) * 200}px`);
+  heart.style.animationDelay = `${Math.random() * 6}s`;
+  heart.style.fontSize = `${Math.random() * 18 + 14}px`;
+  document.body.appendChild(heart);
+
+  setTimeout(() => heart.remove(), 8000);
+}
+
+for (let i = 0; i < 25; i++) {
+  setTimeout(createFallingHeart, i * 240);
+}
+
+setInterval(() => {
+  createFallingHeart();
+}, 600);
