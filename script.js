@@ -10,9 +10,9 @@ const backgroundGallery = document.getElementById('backgroundGallery');
 
 const personalLoveLetter = `My love,
 
-You are the sweetest part of my life, and every moment with you feels lighter, warmer, and more beautiful. I still smile when I think about you, and I thank my heart every day for choosing you. You make my world feel brighter, softer, and infinitely more meaningful.
+You are the sweetest part of my life, and every moment with you feels lighter, warmer, and more beautiful. I still smile when I think about you, and I thank my heart every day for choosing you. You make even ordinary days feel special, and every dream I have feels brighter because you are in it.
 
-I love your kindness, your smile, and the way you make the world feel softer just by being in it. Every dream I have feels brighter because you are in it. I want to keep making memories with you, sharing laughter, and holding on to the love that makes life feel complete.
+I love your kindness, your smile, and the way you make the world feel softer just by being in it. I want to keep making memories with you, laughing together, and building a beautiful life full of love, peace, and happiness.
 
 You are my forever, my favorite person, and my home. I love you more than words can say. 💖💌`;
 
@@ -38,28 +38,29 @@ function createBackgroundGallery() {
   backgroundGallery.innerHTML = '';
 
   const placements = [
-    { left: '8%', top: '4%', rotate: '-10deg' },
-    { right: '8%', top: '10%', rotate: '9deg' },
-    { left: '18%', bottom: '12%', rotate: '7deg' },
-    { right: '12%', bottom: '16%', rotate: '-8deg' },
-    { left: '48%', top: '46%', rotate: '3deg' },
-    { left: '10%', top: '46%', rotate: '-5deg' },
-    { right: '18%', top: '48%', rotate: '6deg' },
-    { left: '60%', bottom: '16%', rotate: '-9deg' }
+    { left: '8%', top: '4%', rotate: '-10' },
+    { right: '8%', top: '10%', rotate: '9' },
+    { left: '18%', bottom: '12%', rotate: '7' },
+    { right: '12%', bottom: '16%', rotate: '-8' },
+    { left: '48%', top: '46%', rotate: '3' },
+    { left: '10%', top: '46%', rotate: '-5' },
+    { right: '18%', top: '48%', rotate: '6' },
+    { left: '60%', bottom: '16%', rotate: '-9' }
   ];
 
   galleryImages.forEach((image, index) => {
     const polaroid = document.createElement('div');
     polaroid.className = 'polaroid';
     polaroid.style.backgroundImage = `url("${image}")`;
+    polaroid.style.setProperty('--delay', index);
+    polaroid.style.setProperty('--tilt', `${placements[index % placements.length].rotate}deg`);
 
     const placement = placements[index % placements.length];
     if (placement.left) polaroid.style.left = placement.left;
     if (placement.right) polaroid.style.right = placement.right;
     if (placement.top) polaroid.style.top = placement.top;
     if (placement.bottom) polaroid.style.bottom = placement.bottom;
-    polaroid.style.setProperty('--tilt', placement.rotate);
-    polaroid.style.animationDelay = `${index * 0.18}s`;
+    polaroid.style.transform = `rotate(${placement.rotate}deg)`;
 
     backgroundGallery.appendChild(polaroid);
   });
@@ -137,9 +138,14 @@ noBtn.addEventListener('touchstart', moveButton);
 noBtn.addEventListener('focus', moveButton);
 
 function moveButton() {
+  if (!mainCard || !noBtn) return;
+
   const cardRect = mainCard.getBoundingClientRect();
-  const centerX = cardRect.left + cardRect.width / 2 - noBtn.offsetWidth / 2;
-  const centerY = cardRect.top + cardRect.height / 2 - noBtn.offsetHeight / 2;
+  const offsetW = noBtn.offsetWidth || 120;
+  const offsetH = noBtn.offsetHeight || 52;
+
+  const centerX = cardRect.left + cardRect.width / 2 - offsetW / 2;
+  const centerY = cardRect.top + cardRect.height / 2 - offsetH / 2;
 
   const driftX = 48;
   const driftY = 26;
@@ -147,10 +153,10 @@ function moveButton() {
   const x = centerX + (Math.random() - 0.5) * driftX;
   const y = centerY + (Math.random() - 0.5) * driftY;
 
-  const minX = cardRect.left + 16;
-  const maxX = cardRect.right - noBtn.offsetWidth - 16;
-  const minY = cardRect.top + 16;
-  const maxY = cardRect.bottom - noBtn.offsetHeight - 16;
+  const minX = 18;
+  const maxX = window.innerWidth - offsetW - 18;
+  const minY = 18;
+  const maxY = window.innerHeight - offsetH - 18;
 
   noBtn.style.position = 'fixed';
   noBtn.style.left = `${Math.min(Math.max(x, minX), maxX)}px`;
@@ -159,6 +165,8 @@ function moveButton() {
 }
 
 yesBtn.addEventListener('click', () => {
+  if (mainCard.classList.contains('is-celebrating')) return;
+
   mainCard.classList.add('is-celebrating');
   question.innerHTML = 'I knew it! 🥰❤️';
   loveNote.style.display = 'block';
