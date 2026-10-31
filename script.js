@@ -3,6 +3,67 @@ const yesBtn = document.getElementById('yesBtn');
 const question = document.getElementById('question');
 const card = document.querySelector('.card');
 const loveNote = document.getElementById('loveNote');
+const musicBtn = document.getElementById('musicBtn');
+
+let audioCtx;
+let isMusicPlaying = false;
+let melodyTimer = null;
+
+function createMelody() {
+  const notes = [261.63, 329.63, 392.0, 329.63, 349.23, 440.0, 392.0, 329.63];
+
+  let index = 0;
+  melodyTimer = setInterval(() => {
+    if (!audioCtx) return;
+
+    const oscillator = audioCtx.createOscillator();
+    const gainNode = audioCtx.createGain();
+
+    oscillator.type = 'sine';
+    oscillator.frequency.value = notes[index % notes.length];
+    gainNode.gain.value = 0.0001;
+
+    oscillator.connect(gainNode);
+    gainNode.connect(audioCtx.destination);
+
+    const now = audioCtx.currentTime;
+    gainNode.gain.exponentialRampToValueAtTime(0.05, now + 0.03);
+    gainNode.gain.exponentialRampToValueAtTime(0.0001, now + 0.35);
+
+    oscillator.start(now);
+    oscillator.stop(now + 0.38);
+
+    index += 1;
+  }, 360);
+}
+
+function toggleMusic() {
+  if (!audioCtx) {
+    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  }
+
+  if (!isMusicPlaying) {
+    isMusicPlaying = true;
+    musicBtn.classList.add('is-playing');
+    musicBtn.textContent = '♫ On';
+    createMelody();
+
+    if (audioCtx.state === 'suspended') {
+      audioCtx.resume();
+    }
+  } else {
+    isMusicPlaying = false;
+    musicBtn.classList.remove('is-playing');
+    musicBtn.textContent = '♫ Music';
+
+    if (melodyTimer) {
+      clearInterval(melodyTimer);
+      melodyTimer = null;
+    }
+  }
+}
+
+musicBtn.addEventListener('click', toggleMusic);
 
 noBtn.addEventListener('mouseover', moveButton);
 noBtn.addEventListener('touchstart', moveButton);
@@ -13,8 +74,8 @@ function moveButton() {
   const centerX = cardRect.left + cardRect.width / 2;
   const centerY = cardRect.top + cardRect.height / 2;
 
-  const offsetX = (Math.random() - 0.5) * 150;
-  const offsetY = (Math.random() - 0.5) * 80;
+  const offsetX = (Math.random() - 0.5) * 120;
+  const offsetY = (Math.random() - 0.5) * 70;
 
   const x = Math.min(
     cardRect.left + cardRect.width - noBtn.offsetWidth - 18,
@@ -37,6 +98,10 @@ yesBtn.addEventListener('click', () => {
   question.innerHTML = 'I knew it! 🥰❤️';
   loveNote.style.display = 'block';
   noBtn.style.display = 'none';
+
+  if (isMusicPlaying) {
+    musicBtn.classList.add('is-playing');
+  }
 
   const heartIcons = ['💖', '💗', '💕', '💞', '💘', '❤️', '💓'];
 
@@ -68,6 +133,7 @@ function createFallingHeart() {
   heart.style.setProperty('--drift', `${(Math.random() - 0.5) * 200}px`);
   heart.style.animationDelay = `${Math.random() * 6}s`;
   heart.style.fontSize = `${Math.random() * 18 + 14}px`;
+
   document.body.appendChild(heart);
 
   setTimeout(() => heart.remove(), 8000);
