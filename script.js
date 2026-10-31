@@ -10,29 +10,11 @@ const backgroundGallery = document.getElementById('backgroundGallery');
 
 const personalLoveLetter = `My love,
 
-You were the best unplanned thing that ever happened in my life.
+You are the sweetest part of my life, and every moment with you feels lighter, warmer, and more beautiful. I still smile when I think about you, and I thank my heart every day for choosing you.
 
-I never searched for you.
-I never expected you.
-I never imagined that an ordinary day would introduce me to someone who would quietly change the way I looked at life.
+I love your kindness, your smile, and the way you make the world feel softer just by being in it. I want to keep making memories with you, laughing together, and building a beautiful life full of love, warmth, and quiet joy.
 
-You came into my world without a warning, without a perfect plan, and without any promises.
-Yet somehow, you became one of the greatest blessings I have ever known.
-
-You taught me that not everything beautiful needs to be planned.
-Some of life’s most precious moments happen when we stop trying to control every detail and simply allow life to surprise us.
-
-You became my comfort on difficult days, my smile when life felt heavy, and the reminder that the universe sometimes knows exactly what we need before we do.
-
-If someone had asked me before we met what my future would look like, I would never have described you.
-And maybe that’s the beauty of it. Because the best things in life rarely arrive when we’re expecting them.
-They appear quietly, change us gently, and leave our hearts fuller than they were before.
-
-So if there’s one thing I’ll always be grateful for,
-it’s that life didn’t follow my plans.
-Because if it had, I might never have met you — the most beautiful, unexpected chapter of my story.
-
-♡`;
+You are my forever, my favorite person, and my home. I love you more than words can say. 💖💌`;
 
 const galleryImages = [
   'images/WhatsApp%20Image%202026-10-31%20at%2010.43.52%20PM.jpeg',
@@ -49,6 +31,10 @@ let audioCtx = null;
 let isMusicPlaying = false;
 let melodyTimer = null;
 let heartsInterval = null;
+
+function clamp(value, min, max) {
+  return Math.min(Math.max(value, min), max);
+}
 
 function safeSetText(element, value) {
   if (element) {
@@ -169,26 +155,30 @@ function moveButton() {
   if (!mainCard || !noBtn) return;
 
   const cardRect = mainCard.getBoundingClientRect();
-  const offsetW = noBtn.offsetWidth || 120;
-  const offsetH = noBtn.offsetHeight || 52;
+  const buttonWidth = noBtn.offsetWidth || 120;
+  const buttonHeight = noBtn.offsetHeight || 52;
 
-  const centerX = cardRect.left + cardRect.width / 2 - offsetW / 2;
-  const centerY = cardRect.top + cardRect.height / 2 - offsetH / 2;
+  const padding = 18;
+  const safeMinX = Math.max(padding, cardRect.left + padding);
+  const safeMaxX = Math.min(window.innerWidth - buttonWidth - padding, cardRect.right - buttonWidth - padding);
+  const safeMinY = Math.max(padding, cardRect.top + padding);
+  const safeMaxY = Math.min(window.innerHeight - buttonHeight - padding, cardRect.bottom - buttonHeight - padding);
 
-  const driftX = 48;
-  const driftY = 26;
+  const x = clamp(
+    safeMinX + Math.random() * (safeMaxX - safeMinX || 1),
+    padding,
+    window.innerWidth - buttonWidth - padding
+  );
 
-  const x = centerX + (Math.random() - 0.5) * driftX;
-  const y = centerY + (Math.random() - 0.5) * driftY;
-
-  const minX = 18;
-  const maxX = window.innerWidth - offsetW - 18;
-  const minY = 18;
-  const maxY = window.innerHeight - offsetH - 18;
+  const y = clamp(
+    safeMinY + Math.random() * (safeMaxY - safeMinY || 1),
+    padding,
+    window.innerHeight - buttonHeight - padding
+  );
 
   noBtn.style.position = 'fixed';
-  noBtn.style.left = `${Math.min(Math.max(x, minX), maxX)}px`;
-  noBtn.style.top = `${Math.min(Math.max(y, minY), maxY)}px`;
+  noBtn.style.left = `${x}px`;
+  noBtn.style.top = `${y}px`;
   noBtn.style.transition = 'left 0.45s ease, top 0.45s ease';
 }
 
@@ -203,7 +193,6 @@ function createFallingHeart() {
   heart.style.fontSize = `${Math.random() * 18 + 14}px`;
 
   document.body.appendChild(heart);
-
   setTimeout(() => heart.remove(), 8000);
 }
 
@@ -220,11 +209,14 @@ function handleYesClick() {
   startBackgroundScene();
 
   loveCard.hidden = false;
-  loveCard.classList.add('show');
+  loveCard.classList.remove('show');
+  requestAnimationFrame(() => {
+    loveCard.classList.add('show');
+  });
 
   const heartIcons = ['💖', '💗', '💕', '💞', '💘', '❤️', '💓'];
 
-  for (let i = 0; i < 40; i++) {
+  for (let i = 0; i < 45; i++) {
     const heart = document.createElement('div');
     heart.classList.add('heart-particle');
     heart.textContent = heartIcons[Math.floor(Math.random() * heartIcons.length)];
@@ -234,11 +226,11 @@ function handleYesClick() {
 
     heart.style.left = `${startX}px`;
     heart.style.top = `${startY}px`;
-    heart.style.setProperty('--dx', `${(Math.random() - 0.5) * 280}px`);
-    heart.style.setProperty('--dy', `${-220 - Math.random() * 180}px`);
+    heart.style.setProperty('--dx', `${(Math.random() - 0.5) * 300}px`);
+    heart.style.setProperty('--dy', `${-240 - Math.random() * 220}px`);
 
     document.body.appendChild(heart);
-    setTimeout(() => heart.remove(), 1600);
+    setTimeout(() => heart.remove(), 1700);
   }
 }
 
