@@ -42,7 +42,7 @@ body {
 
 .sparkles {
   background-image:
-    radial-gradient(circle, rgba(255,255,255,0.75) 1px, transparent 1px),
+    radial-gradient(circle, rgba(255, 255, 255, 0.75) 1px, transparent 1px),
     radial-gradient(circle, rgba(255, 122, 173, 0.8) 1px, transparent 1px),
     radial-gradient(circle, rgba(217, 199, 255, 0.55) 1px, transparent 1px);
   background-size: 120px 120px;
@@ -53,14 +53,14 @@ body {
 
 .romantic-pattern {
   background:
-    radial-gradient(circle at 20% 20%, rgba(255,122,173,0.18), transparent 15%),
-    radial-gradient(circle at 80% 30%, rgba(217,199,255,0.14), transparent 18%),
-    radial-gradient(circle at 50% 80%, rgba(255,122,173,0.12), transparent 20%);
+    radial-gradient(circle at 20% 20%, rgba(255, 122, 173, 0.18), transparent 15%),
+    radial-gradient(circle at 80% 30%, rgba(217, 199, 255, 0.14), transparent 18%),
+    radial-gradient(circle at 50% 80%, rgba(255, 122, 173, 0.12), transparent 20%);
   opacity: 0.9;
 }
 
 .background-gallery {
-  z-index: 1;
+  z-index: 0;
   display: block;
   opacity: 0;
   visibility: hidden;
@@ -78,10 +78,17 @@ body {
   height: clamp(180px, 28vw, 260px);
   background-size: cover;
   background-position: center;
-  border: 10px solid rgba(255,255,255,0.8);
-  box-shadow: 0 12px 24px rgba(0,0,0,0.25);
+  border: 10px solid rgba(255, 255, 255, 0.8);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.25);
   transform-origin: center;
   filter: grayscale(1) contrast(1.15) brightness(0.9);
+  opacity: 0;
+  border-radius: 6px;
+  animation: polaroidFall 1.2s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  animation-delay: calc(var(--delay, 0) * 0.12s);
+}
+
+.background-gallery.show .polaroid {
   opacity: 0.9;
 }
 
@@ -89,7 +96,7 @@ body {
   content: "";
   position: absolute;
   inset: 0;
-  background: rgba(255,255,255,0.06);
+  background: rgba(255, 255, 255, 0.06);
 }
 
 .container {
@@ -109,22 +116,25 @@ body {
   align-items: center;
   gap: 24px;
   width: min(90vw, 430px);
+  position: relative;
+  z-index: 20;
 }
 
 .card {
   position: relative;
   width: 100%;
   text-align: center;
-  background: rgba(255,255,255,0.04);
+  background: rgba(255, 255, 255, 0.04);
   padding: 30px 24px 28px;
   border-radius: 28px;
-  border: 1px solid rgba(255,255,255,0.08);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   box-shadow:
     0 0 28px rgba(255, 170, 200, 0.35),
-    0 20px 40px rgba(0,0,0,0.38);
+    0 20px 40px rgba(0, 0, 0, 0.38);
   backdrop-filter: blur(8px);
   animation: fadeInUp 0.9s ease-out;
   transition: transform 0.5s ease, box-shadow 0.5s ease, opacity 0.45s ease;
+  z-index: 20;
 }
 
 .card::before {
@@ -132,7 +142,7 @@ body {
   position: absolute;
   inset: -2px;
   border-radius: 30px;
-  background: linear-gradient(135deg, rgba(255,122,173,0.18), rgba(255,255,255,0.04), rgba(217,199,255,0.16));
+  background: linear-gradient(135deg, rgba(255, 122, 173, 0.18), rgba(255, 255, 255, 0.04), rgba(217, 199, 255, 0.16));
   z-index: -1;
 }
 
@@ -153,7 +163,7 @@ body {
   margin: 0 auto 18px;
   border-radius: 24px;
   overflow: hidden;
-  box-shadow: 0 0 25px rgba(255,122,173,0.2);
+  box-shadow: 0 0 25px rgba(255, 122, 173, 0.2);
 }
 
 .main-image,
@@ -191,7 +201,7 @@ h1 {
   color: var(--pink);
   margin-bottom: 18px;
   font-size: clamp(2rem, 3vw, 3rem);
-  text-shadow: 0 0 12px rgba(255,122,173,0.35);
+  text-shadow: 0 0 12px rgba(255, 122, 173, 0.35);
 }
 
 .love-note {
@@ -200,7 +210,7 @@ h1 {
   overflow: hidden;
   margin: 0 auto 18px;
   max-width: 320px;
-  color: rgba(255,255,255,0.92);
+  color: rgba(255, 255, 255, 0.92);
   font-size: 1rem;
   line-height: 1.5;
   transition: opacity 0.4s ease, height 0.4s ease, transform 0.4s ease;
@@ -218,7 +228,7 @@ h1 {
   opacity: 0;
   transform: translateY(18px);
   background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255,255,255,0.1);
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .love-card.show {
@@ -269,7 +279,7 @@ button {
 
 button:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
   filter: brightness(1.05);
 }
 
@@ -280,28 +290,29 @@ button:active {
 #yesBtn {
   background: linear-gradient(135deg, var(--green), var(--green-dark));
   color: var(--white);
-  box-shadow: 0 10px 20px rgba(76,175,80,0.32);
+  box-shadow: 0 10px 20px rgba(76, 175, 80, 0.32);
 }
 
 #noBtn {
   position: relative;
   background: linear-gradient(135deg, var(--red), var(--red-dark));
   color: var(--white);
-  box-shadow: 0 10px 20px rgba(244,67,54,0.32);
+  box-shadow: 0 10px 20px rgba(244, 67, 54, 0.32);
+  z-index: 30;
 }
 
 .music-btn {
   padding: 10px 18px;
   font-size: 0.95rem;
-  background: linear-gradient(135deg, rgba(255,255,255,0.18), rgba(255,122,173,0.25));
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.18), rgba(255, 122, 173, 0.25));
   color: var(--white);
-  border: 1px solid rgba(255,255,255,0.12);
-  box-shadow: 0 0 18px rgba(255,122,173,0.2);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 0 18px rgba(255, 122, 173, 0.2);
 }
 
 .music-btn.is-playing {
-  background: linear-gradient(135deg, rgba(255,255,255,0.22), rgba(217,199,255,0.32));
-  box-shadow: 0 0 22px rgba(217,199,255,0.3);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.22), rgba(217, 199, 255, 0.32));
+  box-shadow: 0 0 22px rgba(217, 199, 255, 0.3);
 }
 
 .heart-particle,
@@ -377,6 +388,20 @@ button:active {
   100% {
     transform: translate3d(var(--drift), 110vh, 0) scale(1.2);
     opacity: 0;
+  }
+}
+
+@keyframes polaroidFall {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, -25vh, 0) rotate(0deg) scale(0.8);
+  }
+  30% {
+    opacity: 0.8;
+  }
+  100% {
+    opacity: 0.9;
+    transform: translate3d(0, 0, 0) rotate(var(--tilt, 0deg)) scale(1);
   }
 }
 
