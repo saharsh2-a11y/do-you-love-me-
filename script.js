@@ -10,130 +10,86 @@ const backgroundGallery = document.getElementById('backgroundGallery');
 
 const personalLoveLetter = `My love,
 
-You are the sweetest part of my life, and every moment with you feels lighter, warmer, and more beautiful. I still smile when I think about you, and I thank my heart every day for choosing you. You make even ordinary days feel special, and every dream I have feels brighter because you are in it.
+You were the best unplanned thing that ever happened in my life.
 
-I love your kindness, your smile, and the way you make the world feel softer just by being in it. I want to keep making memories with you, laughing together, and building a beautiful life full of love, peace, and happiness.
+I never searched for you.
+I never expected you.
+I never imagined that an ordinary day would introduce me to someone who would quietly change the way I looked at life.
 
-You are my forever, my favorite person, and my home. I love you more than words can say. 💖💌`;
+You came into my world without a warning, without a perfect plan, and without any promises.
+Yet somehow, you became one of the greatest blessings I have ever known.
+
+You taught me that not everything beautiful needs to be planned.
+Some of life’s most precious moments happen when we stop trying to control every detail and simply allow life to surprise us.
+
+You became my comfort on difficult days, my smile when life felt heavy, and the reminder that the universe sometimes knows exactly what we need before we do.
+
+If someone had asked me before we met what my future would look like, I would never have described you.
+And maybe that’s the beauty of it. Because the best things in life rarely arrive when we’re expecting them.
+They appear quietly, change us gently, and leave our hearts fuller than they were before.
+
+So if there’s one thing I’ll always be grateful for,
+it’s that life didn’t follow my plans.
+Because if it had, I might never have met you — the most beautiful, unexpected chapter of my story.
+
+♡`;
 
 const galleryImages = [
-  "images/WhatsApp Image 2026-10-31 at 10.43.52 PM.jpeg",
-  "images/WhatsApp Image 2026-10-31 at 10.43.54 PM.jpeg",
-  "images/WhatsApp Image 2026-10-31 at 10.43.58 PM.jpeg",
-  "images/WhatsApp Image 2026-10-31 at 10.43.59 PM (1).jpeg",
-  "images/WhatsApp Image 2026-10-31 at 10.43.59 PM (2).jpeg",
-  "images/WhatsApp Image 2026-10-31 at 10.43.59 PM (3).jpeg",
-  "images/WhatsApp Image 2026-10-31 at 10.43.59 PM.jpeg",
-  "images/WhatsApp Image 2026-10-31 at 10.44.00 PM (1).jpeg",
-  "images/WhatsApp Image 2026-10-31 at 10.44.00 PM (2).jpeg",
-  "images/WhatsApp Image 2026-10-31 at 10.44.00 PM.jpeg",
-  "images/WhatsApp Image 2026-10-31 at 10.44.01 PM (1).jpeg",
-  "images/WhatsApp Image 2026-10-31 at 10.44.01 PM (2).jpeg",
-  "images/WhatsApp Image 2026-10-31 at 10.44.01 PM (3).jpeg",
-  "images/WhatsApp Image 2026-10-31 at 10.44.01 PM.jpeg",
-  "images/WhatsApp Image 2026-10-31 at 10.44.02 PM (1).jpeg",
-  "images/WhatsApp Image 2026-10-31 at 10.44.02 PM (2).jpeg",
-  "images/WhatsApp Image 2026-10-31 at 10.44.02 PM.jpeg",
-  "images/WhatsApp Image 2026-10-31 at 10.44.03 PM (1).jpeg",
-  "images/WhatsApp Image 2026-10-31 at 10.44.03 PM (2).jpeg",
-  "images/WhatsApp Image 2026-10-31 at 10.44.03 PM (3).jpeg",
-  "images/WhatsApp Image 2026-10-31 at 10.44.03 PM.jpeg",
-  "images/WhatsApp Image 2026-10-31 at 10.44.04 PM (1).jpeg",
-  "images/WhatsApp Image 2026-10-31 at 10.44.04 PM (2).jpeg",
-  "images/WhatsApp Image 2026-10-31 at 10.44.04 PM.jpeg",
-  "images/WhatsApp Image 2026-10-31 at 10.46.17 PM.jpeg",
-  "images/WhatsApp Image 2026-10-31 at 10.46.18 PM.jpeg",
-  "images/WhatsApp Image 2026-10-31 at 10.46.20 PM.jpeg",
-  "images/WhatsApp Image 2026-10-31 at 10.46.21 PM.jpeg",
-  "images/WhatsApp Image 2026-10-31 at 10.46.23 PM.jpeg",
-  "images/WhatsApp Image 2026-10-31 at 10.46.35 PM (1).jpeg",
-  "images/WhatsApp Image 2026-10-31 at 10.46.35 PM.jpeg",
-  "images/WhatsApp Image 2026-10-31 at 10.46.36 PM (1).jpeg",
-  "images/WhatsApp Image 2026-10-31 at 10.46.36 PM.jpeg",
-  "images/WhatsApp Image 2026-10-31 at 10.48.05 PM.jpeg",
-  "images/WhatsApp Image 2026-10-31 at 10.48.06 PM.jpeg",
-  "images/WhatsApp Image 2026-10-31 at 10.48.09 PM.jpeg",
-  "images/WhatsApp Image 2026-10-31 at 10.48.12 PM.jpeg",
-  "images/WhatsApp Image 2026-10-31 at 10.48.13 PM.jpeg",
-  "images/WhatsApp Image 2026-10-31 at 10.48.28 PM.jpeg",
-  "images/WhatsApp Image 2026-10-31 at 10.48.30 PM.jpeg",
-  "images/WhatsApp Image 2026-10-31 at 10.48.33 PM.jpeg",
-  "images/WhatsApp Image 2026-10-31 at 10.48.36 PM.jpeg",
-  "images/WhatsApp Image 2026-10-31 at 10.48.37 PM.jpeg",
-  "images/WhatsApp Image 2026-10-31 at 10.48.38 PM.jpeg",
-  "images/WhatsApp Image 2026-10-31 at 10.48.42 PM.jpeg",
-  "images/WhatsApp Image 2026-10-31 at 10.48.48 PM.jpeg",
-  "images/WhatsApp Image 2026-10-31 at 10.48.49 PM.jpeg",
-  "images/WhatsApp Image 2026-10-31 at 10.49.02 PM.jpeg",
-  "images/WhatsApp Image 2026-10-31 at 10.49.06 PM.jpeg",
-  "images/WhatsApp Image 2026-10-31 at 10.49.13 PM.jpeg",
-  "images/WhatsApp Image 2026-10-31 at 10.49.14 PM.jpeg",
-  "images/WhatsApp Image 2026-10-31 at 10.49.16 PM.jpeg",
-  "images/WhatsApp Image 2026-10-31 at 10.49.18 PM.jpeg",
-  "images/WhatsApp Image 2026-10-31 at 10.49.21 PM.jpeg",
-  "images/WhatsApp Image 2026-10-31 at 10.49.24 PM.jpeg",
-  "images/WhatsApp Image 2026-10-31 at 10.49.27 PM.jpeg",
-  "images/WhatsApp Image 2026-10-31 at 10.49.30 PM.jpeg",
-  "images/WhatsApp Image 2026-10-31 at 10.49.40 PM.jpeg",
-  "images/WhatsApp Image 2026-10-31 at 10.49.41 PM.jpeg",
-  "images/WhatsApp Image 2026-10-31 at 10.49.43 PM.jpeg",
-  "images/WhatsApp Image 2026-10-31 at 10.49.44 PM.jpeg",
-  "images/WhatsApp Image 2026-10-31 at 10.49.46 PM.jpeg",
-  "images/WhatsApp Image 2026-10-31 at 10.49.48 PM.jpeg",
-  "images/WhatsApp Image 2026-10-31 at 10.49.49 PM.jpeg",
-  "images/WhatsApp Image 2026-10-31 at 10.49.52 PM.jpeg",
-  "images/WhatsApp Image 2026-10-31 at 10.49.56 PM.jpeg",
-  "images/WhatsApp Image 2026-10-31 at 10.49.57 PM (1).jpeg",
-  "images/WhatsApp Image 2026-10-31 at 10.49.57 PM.jpeg",
-  "images/WhatsApp Image 2026-10-31 at 10.49.58 PM (1).jpeg",
-  "images/WhatsApp Image 2026-10-31 at 10.49.58 PM.jpeg",
-  "images/WhatsApp Image 2026-10-31 at 10.49.59 PM.jpeg",
-  "images/WhatsApp Image 2026-10-31 at 10.50.00 PM.jpeg",
-  "images/WhatsApp Image 2026-10-31 at 10.50.01 PM.jpeg",
-  "images/WhatsApp Image 2026-10-31 at 10.50.02 PM (1).jpeg",
-  "images/WhatsApp Image 2026-10-31 at 10.50.02 PM (2).jpeg",
-  "images/WhatsApp Image 2026-10-31 at 10.50.02 PM.jpeg",
-  "images/WhatsApp Image 2026-10-31 at 10.50.03 PM (1).jpeg",
-  "images/WhatsApp Image 2026-10-31 at 10.50.03 PM.jpeg",
-  "images/WhatsApp Image 2026-10-31 at 10.50.04 PM (1).jpeg",
-  "images/WhatsApp Image 2026-10-31 at 10.50.04 PM.jpeg",
-  "images/WhatsApp Image 2026-10-31 at 10.50.07 PM.jpeg",
-  "images/WhatsApp Image 2026-10-31 at 10.50.08 PM (1).jpeg",
-  "images/WhatsApp Image 2026-10-31 at 10.50.08 PM.jpeg",
-  "images/WhatsApp Image 2026-10-31 at 11.49.37 PM (1).jpeg",
-  "images/WhatsApp Image 2026-10-31 at 11.49.37 PM (2).jpeg",
-  "images/WhatsApp Image 2026-10-31 at 11.49.37 PM.jpeg",
-  "images/WhatsApp Image 2026-10-31 at 11.49.38 PM.jpeg",
-  "images/WhatsApp Image 2026-10-31 at 11.49.39 PM (1).jpeg",
-  "images/WhatsApp Image 2026-10-31 at 11.49.39 PM.jpeg",
-  "images/WhatsApp Image 2026-10-31 at 11.49.41 PM.jpeg"
+  'images/WhatsApp%20Image%202026-10-31%20at%2010.43.52%20PM.jpeg',
+  'images/WhatsApp%20Image%202026-10-31%20at%2010.43.54%20PM.jpeg',
+  'images/WhatsApp%20Image%202026-10-31%20at%2010.44.00%20PM.jpeg',
+  'images/WhatsApp%20Image%202026-10-31%20at%2011.49.39%20PM.jpeg',
+  'images/WhatsApp%20Image%202026-10-31%20at%2011.49.42%20PM.jpeg',
+  'images/WhatsApp%20Image%202026-10-31%20at%2011.49.43%20PM.jpeg',
+  'images/WhatsApp%20Image%202026-10-31%20at%2011.49.45%20PM.jpeg',
+  'images/WhatsApp%20Image%202026-10-31%20at%2011.49.48%20PM.jpeg'
 ];
 
-let audioCtx;
+let audioCtx = null;
 let isMusicPlaying = false;
 let melodyTimer = null;
 let heartsInterval = null;
 
-loveMessage.textContent = personalLoveLetter;
+function safeSetText(element, value) {
+  if (element) {
+    element.textContent = value;
+  }
+}
+
+function initializeLoveMessage() {
+  safeSetText(loveMessage, personalLoveLetter);
+}
 
 function createBackgroundGallery() {
+  if (!backgroundGallery) return;
+
   backgroundGallery.innerHTML = '';
+
+  const placements = [
+    { left: '8%', top: '4%', rotate: '-10' },
+    { right: '8%', top: '10%', rotate: '9' },
+    { left: '18%', bottom: '12%', rotate: '7' },
+    { right: '12%', bottom: '16%', rotate: '-8' },
+    { left: '48%', top: '46%', rotate: '3' },
+    { left: '10%', top: '46%', rotate: '-5' },
+    { right: '18%', top: '48%', rotate: '6' },
+    { left: '60%', bottom: '16%', rotate: '-9' }
+  ];
 
   galleryImages.forEach((image, index) => {
     const polaroid = document.createElement('div');
     polaroid.className = 'polaroid';
     polaroid.style.backgroundImage = `url("${image}")`;
+    polaroid.style.setProperty('--delay', index);
 
-    const angle = (Math.random() * 28) - 14;
-    const left = 4 + Math.random() * 82;
-    const top = -(10 + Math.random() * 22);
+    const placement = placements[index % placements.length];
+    polaroid.style.setProperty('--tilt', `${placement.rotate}deg`);
 
-    polaroid.style.left = `${left}%`;
-    polaroid.style.top = `${top}%`;
-    polaroid.style.setProperty('--angle', `${angle}deg`);
-    polaroid.style.setProperty('--driftX', `${(Math.random() - 0.5) * 90}px`);
-    polaroid.style.setProperty('--dropY', `${(Math.random() * 80) + 28}px`);
-    polaroid.style.animationDelay = `${index * 0.12}s`;
+    if (placement.left) polaroid.style.left = placement.left;
+    if (placement.right) polaroid.style.right = placement.right;
+    if (placement.top) polaroid.style.top = placement.top;
+    if (placement.bottom) polaroid.style.bottom = placement.bottom;
+    polaroid.style.transform = `rotate(${placement.rotate}deg)`;
 
     backgroundGallery.appendChild(polaroid);
   });
@@ -141,23 +97,22 @@ function createBackgroundGallery() {
 
 function startBackgroundScene() {
   createBackgroundGallery();
+
+  if (!backgroundGallery) return;
   backgroundGallery.classList.add('show');
 
   if (heartsInterval) clearInterval(heartsInterval);
-
-  heartsInterval = setInterval(() => {
-    for (let i = 0; i < 3; i++) {
-      createFallingHeart();
-    }
-  }, 220);
+  heartsInterval = setInterval(() => createFallingHeart(), 550);
 }
 
 function createMelody() {
-  const notes = [261.63, 329.63, 392.0, 329.63, 349.23, 440.0, 392.0, 329.63];
+  if (!audioCtx) return;
 
+  const notes = [261.63, 329.63, 392.0, 329.63, 349.23, 440.0, 392.0, 329.63];
   let index = 0;
+
   melodyTimer = setInterval(() => {
-    if (!audioCtx) return;
+    if (!audioCtx || audioCtx.state === 'closed') return;
 
     const oscillator = audioCtx.createOscillator();
     const gainNode = audioCtx.createGain();
@@ -181,8 +136,12 @@ function createMelody() {
 }
 
 function toggleMusic() {
+  if (!musicBtn) return;
+
   if (!audioCtx) {
-    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    const AudioCtor = window.AudioContext || window.webkitAudioContext;
+    if (!AudioCtor) return;
+    audioCtx = new AudioCtor();
   }
 
   if (!isMusicPlaying) {
@@ -206,23 +165,55 @@ function toggleMusic() {
   }
 }
 
-musicBtn.addEventListener('click', toggleMusic);
-
-noBtn.addEventListener('mouseover', moveButton);
-noBtn.addEventListener('touchstart', moveButton);
-
 function moveButton() {
-  const x = Math.floor(Math.random() * (window.innerWidth - noBtn.offsetWidth));
-  const y = Math.floor(Math.random() * (window.innerHeight - noBtn.offsetHeight));
-  
-  noBtn.style.left = ${x}px;
-  noBtn.style.top = ${y}px;
+  if (!mainCard || !noBtn) return;
 
-yesBtn.addEventListener('click', () => {
+  const cardRect = mainCard.getBoundingClientRect();
+  const offsetW = noBtn.offsetWidth || 120;
+  const offsetH = noBtn.offsetHeight || 52;
+
+  const centerX = cardRect.left + cardRect.width / 2 - offsetW / 2;
+  const centerY = cardRect.top + cardRect.height / 2 - offsetH / 2;
+
+  const driftX = 48;
+  const driftY = 26;
+
+  const x = centerX + (Math.random() - 0.5) * driftX;
+  const y = centerY + (Math.random() - 0.5) * driftY;
+
+  const minX = 18;
+  const maxX = window.innerWidth - offsetW - 18;
+  const minY = 18;
+  const maxY = window.innerHeight - offsetH - 18;
+
+  noBtn.style.position = 'fixed';
+  noBtn.style.left = `${Math.min(Math.max(x, minX), maxX)}px`;
+  noBtn.style.top = `${Math.min(Math.max(y, minY), maxY)}px`;
+  noBtn.style.transition = 'left 0.45s ease, top 0.45s ease';
+}
+
+function createFallingHeart() {
+  const heart = document.createElement('div');
+  heart.classList.add('falling-heart');
+  heart.textContent = ['💖', '💗', '💘', '💝', '💕'][Math.floor(Math.random() * 5)];
+  heart.style.left = `${Math.random() * 100}vw`;
+  heart.style.top = '-10vh';
+  heart.style.setProperty('--drift', `${(Math.random() - 0.5) * 200}px`);
+  heart.style.animationDelay = `${Math.random() * 6}s`;
+  heart.style.fontSize = `${Math.random() * 18 + 14}px`;
+
+  document.body.appendChild(heart);
+
+  setTimeout(() => heart.remove(), 8000);
+}
+
+function handleYesClick() {
+  if (!mainCard || !question || !loveNote || !noBtn || !loveCard || !yesBtn) return;
+
   if (mainCard.classList.contains('is-celebrating')) return;
 
   mainCard.classList.add('is-celebrating');
-  question.innerHTML = 'I knew it! 🥰❤️';
+  question.textContent = 'I knew it! 🥰❤️';
   loveNote.style.display = 'block';
   noBtn.style.display = 'none';
 
@@ -233,7 +224,7 @@ yesBtn.addEventListener('click', () => {
 
   const heartIcons = ['💖', '💗', '💕', '💞', '💘', '❤️', '💓'];
 
-  for (let i = 0; i < 50; i++) {
+  for (let i = 0; i < 40; i++) {
     const heart = document.createElement('div');
     heart.classList.add('heart-particle');
     heart.textContent = heartIcons[Math.floor(Math.random() * heartIcons.length)];
@@ -243,30 +234,41 @@ yesBtn.addEventListener('click', () => {
 
     heart.style.left = `${startX}px`;
     heart.style.top = `${startY}px`;
-    heart.style.setProperty('--dx', `${(Math.random() - 0.5) * 320}px`);
-    heart.style.setProperty('--dy', `${-260 - Math.random() * 220}px`);
+    heart.style.setProperty('--dx', `${(Math.random() - 0.5) * 280}px`);
+    heart.style.setProperty('--dy', `${-220 - Math.random() * 180}px`);
 
     document.body.appendChild(heart);
-
-    setTimeout(() => heart.remove(), 1700);
+    setTimeout(() => heart.remove(), 1600);
   }
-});
-
-function createFallingHeart() {
-  const heart = document.createElement('div');
-  heart.classList.add('falling-heart');
-  heart.textContent = ['💖', '💗', '💘', '💝', '💕'][Math.floor(Math.random() * 5)];
-  heart.style.left = `${Math.random() * 100}vw`;
-  heart.style.top = '-10vh';
-  heart.style.setProperty('--drift', `${(Math.random() - 0.5) * 260}px`);
-  heart.style.animationDelay = `${Math.random() * 6}s`;
-  heart.style.fontSize = `${Math.random() * 18 + 18}px`;
-
-  document.body.appendChild(heart);
-
-  setTimeout(() => heart.remove(), 9000);
 }
 
-for (let i = 0; i < 9; i++) {
-  setTimeout(() => createFallingHeart(), i * 180);
+function bindEvents() {
+  if (musicBtn) {
+    musicBtn.addEventListener('click', toggleMusic);
+  }
+
+  if (noBtn) {
+    noBtn.addEventListener('mouseover', moveButton);
+    noBtn.addEventListener('touchstart', moveButton);
+    noBtn.addEventListener('focus', moveButton);
+  }
+
+  if (yesBtn) {
+    yesBtn.addEventListener('click', handleYesClick);
+  }
+}
+
+function initialize() {
+  initializeLoveMessage();
+  bindEvents();
+
+  for (let i = 0; i < 6; i++) {
+    setTimeout(() => createFallingHeart(), i * 260);
+  }
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initialize);
+} else {
+  initialize();
 }
