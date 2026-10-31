@@ -32,7 +32,6 @@ function moveButton() {
 }
 
 yesBtn.addEventListener('click', () => {
-  document.body.classList.add('after-yes');
   card.classList.add('is-celebrating');
   question.innerHTML = 'I knew it! 🥰❤️';
   loveNote.style.display = 'block';
@@ -80,3 +79,4 @@ for (let i = 0; i < 25; i++) {
 setInterval(() => {
   createFallingHeart();
 }, 600);
+
