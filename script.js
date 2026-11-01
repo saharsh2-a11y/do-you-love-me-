@@ -157,8 +157,8 @@ function createBackgroundGallery() {
 
   backgroundGallery.innerHTML = '';
 
-  const columns = 8;
-  const rowPadding = 8;
+  const columns = 10;
+  const rowGap = 14;
 
   galleryImages.forEach((image, index) => {
     const polaroid = document.createElement('div');
@@ -168,14 +168,14 @@ function createBackgroundGallery() {
 
     const row = Math.floor(index / columns);
     const col = index % columns;
-    const left = 5 + col * 11.5 + (row % 2 === 0 ? 0 : 1.8);
-    const top = 2 + row * 17 + (col % 2 === 0 ? 0 : 1.2);
+    const left = 4 + col * 9.3 + (row % 2 === 0 ? 0 : 1.5);
+    const top = 5 + row * rowGap;
 
     polaroid.style.left = `${left}%`;
     polaroid.style.top = `${top}%`;
     polaroid.style.setProperty('--angle', `${((index % 9) - 4) * 5}deg`);
     polaroid.style.setProperty('--driftX', `${(index % 2 === 0 ? 1 : -1) * (8 + (index % 6) * 4)}px`);
-    polaroid.style.setProperty('--dropY', `${20 + row * 8 + rowPadding}px`);
+    polaroid.style.setProperty('--dropY', `${18 + row * 8}px`);
 
     backgroundGallery.appendChild(polaroid);
   });

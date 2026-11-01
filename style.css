@@ -107,19 +107,17 @@ body::after {
 
 .polaroid {
   position: absolute;
-  left: 50%;
-  top: -25vh;
-  width: clamp(110px, 16vw, 170px);
-  height: clamp(140px, 20vw, 210px);
+  width: clamp(100px, 10vw, 150px);
+  height: clamp(120px, 14vw, 180px);
   background-size: cover;
   background-position: center;
-  border: 8px solid rgba(255,255,255,0.8);
+  border: 7px solid rgba(255,255,255,0.8);
   box-shadow: 0 14px 24px rgba(0,0,0,0.28), 0 0 18px rgba(255,122,173,0.16);
   border-radius: 6px;
-  transform: rotate(var(--angle, 0deg));
   filter: grayscale(1) contrast(1.12) brightness(0.88) saturate(0.8);
   opacity: 0;
-  animation: polaroidDrop 1.5s cubic-bezier(0.16, 0.84, 0.44, 1) forwards;
+  transform: translate3d(var(--driftX, 0), -18vh, 0) rotate(var(--angle, 0deg)) scale(0.8);
+  animation: polaroidDrop 1.8s cubic-bezier(0.16, 0.84, 0.44, 1) forwards;
   animation-delay: var(--delay, 0s);
   will-change: transform, opacity;
 }
@@ -488,13 +486,14 @@ button:active {
 @keyframes polaroidDrop {
   0% {
     opacity: 0;
-    transform: translate3d(var(--driftX, 0), -120vh, 0) rotate(var(--angle, 0deg)) scale(0.7);
+    transform: translate3d(var(--driftX, 0), -18vh, 0) rotate(var(--angle, 0deg)) scale(0.8);
   }
   25% {
     opacity: 0.9;
   }
-  50% {
-    transform: translate3d(var(--driftX, 0), calc(var(--dropY, 40px) * 0.5), 0) rotate(calc(var(--angle, 0deg) + 4deg)) scale(1.02);
+  55% {
+    opacity: 1;
+    transform: translate3d(var(--driftX, 0), calc(var(--dropY, 22px) * 0.7), 0) rotate(calc(var(--angle, 0deg) + 4deg)) scale(1.02);
   }
   100% {
     opacity: 0.92;
