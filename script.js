@@ -157,31 +157,25 @@ function createBackgroundGallery() {
 
   backgroundGallery.innerHTML = '';
 
-  const placements = [
-    { left: '8%', top: '4%', rotate: '-10' },
-    { right: '8%', top: '10%', rotate: '9' },
-    { left: '18%', bottom: '12%', rotate: '7' },
-    { right: '12%', bottom: '16%', rotate: '-8' },
-    { left: '48%', top: '46%', rotate: '3' },
-    { left: '10%', top: '46%', rotate: '-5' },
-    { right: '18%', top: '48%', rotate: '6' },
-    { left: '60%', bottom: '16%', rotate: '-9' }
-  ];
+  const columns = 8;
+  const rowPadding = 8;
 
   galleryImages.forEach((image, index) => {
     const polaroid = document.createElement('div');
     polaroid.className = 'polaroid';
     polaroid.style.backgroundImage = `url("${image}")`;
-    polaroid.style.setProperty('--delay', index);
+    polaroid.style.setProperty('--delay', `${index * 0.06}s`);
 
-    const placement = placements[index % placements.length];
-    polaroid.style.setProperty('--tilt', `${placement.rotate}deg`);
+    const row = Math.floor(index / columns);
+    const col = index % columns;
+    const left = 5 + col * 11.5 + (row % 2 === 0 ? 0 : 1.8);
+    const top = 2 + row * 17 + (col % 2 === 0 ? 0 : 1.2);
 
-    if (placement.left) polaroid.style.left = placement.left;
-    if (placement.right) polaroid.style.right = placement.right;
-    if (placement.top) polaroid.style.top = placement.top;
-    if (placement.bottom) polaroid.style.bottom = placement.bottom;
-    polaroid.style.transform = `rotate(${placement.rotate}deg)`;
+    polaroid.style.left = `${left}%`;
+    polaroid.style.top = `${top}%`;
+    polaroid.style.setProperty('--angle', `${((index % 9) - 4) * 5}deg`);
+    polaroid.style.setProperty('--driftX', `${(index % 2 === 0 ? 1 : -1) * (8 + (index % 6) * 4)}px`);
+    polaroid.style.setProperty('--dropY', `${20 + row * 8 + rowPadding}px`);
 
     backgroundGallery.appendChild(polaroid);
   });

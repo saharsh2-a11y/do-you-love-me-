@@ -96,6 +96,7 @@ body::after {
   display: block;
   opacity: 0;
   visibility: hidden;
+  overflow: visible;
   transition: opacity 0.8s ease, visibility 0.8s ease;
 }
 
@@ -118,13 +119,13 @@ body::after {
   transform: rotate(var(--angle, 0deg));
   filter: grayscale(1) contrast(1.12) brightness(0.88) saturate(0.8);
   opacity: 0;
-  animation: polaroidCycle var(--fall-duration, 18s) ease-in-out infinite;
+  animation: polaroidDrop 1.5s cubic-bezier(0.16, 0.84, 0.44, 1) forwards;
   animation-delay: var(--delay, 0s);
   will-change: transform, opacity;
 }
 
 .background-gallery.show .polaroid {
-  opacity: 0.9;
+  opacity: 0.92;
 }
 
 .polaroid::after {
@@ -335,7 +336,7 @@ button:active {
 }
 
 #noBtn {
-  position: relative;
+  position: fixed;
   background: linear-gradient(135deg, var(--red), var(--red-dark));
   color: var(--white);
   box-shadow: 0 10px 20px rgba(244,67,54,0.32);
@@ -484,25 +485,20 @@ button:active {
   }
 }
 
-@keyframes polaroidCycle {
+@keyframes polaroidDrop {
   0% {
     opacity: 0;
-    transform: translate3d(var(--driftX, 0), -15vh, 0) rotate(var(--angle, 0deg)) scale(0.8);
+    transform: translate3d(var(--driftX, 0), -120vh, 0) rotate(var(--angle, 0deg)) scale(0.7);
   }
-  10% {
+  25% {
     opacity: 0.9;
   }
-  42% {
-    opacity: 0.95;
-    transform: translate3d(var(--driftX, 0), 42vh, 0) rotate(calc(var(--angle, 0deg) + 4deg)) scale(0.9);
-  }
-  75% {
-    opacity: 0.8;
-    transform: translate3d(var(--driftX, 0), 82vh, 0) rotate(calc(var(--angle, 0deg) - 2deg)) scale(0.94);
+  50% {
+    transform: translate3d(var(--driftX, 0), calc(var(--dropY, 40px) * 0.5), 0) rotate(calc(var(--angle, 0deg) + 4deg)) scale(1.02);
   }
   100% {
-    opacity: 0;
-    transform: translate3d(var(--driftX, 0), 118vh, 0) rotate(var(--angle, 0deg)) scale(0.8);
+    opacity: 0.92;
+    transform: translate3d(var(--driftX, 0), 0, 0) rotate(var(--angle, 0deg)) scale(1);
   }
 }
 
