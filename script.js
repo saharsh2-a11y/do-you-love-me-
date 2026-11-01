@@ -8,13 +8,37 @@ const loveNote = document.getElementById('loveNote');
 const musicBtn = document.getElementById('musicBtn');
 const backgroundGallery = document.getElementById('backgroundGallery');
 
-const personalLoveLetter = `My love,
+const personalLoveLetter = `You were the best unplanned thing that ever happened in my life.
 
-You are the sweetest part of my life, and every moment with you feels lighter, warmer, and more beautiful. I still smile when I think about you, and I thank my heart every day for choosing you. You are my calm, my joy, and my favorite person in the whole world.
+I never searched for you.
+I never expected you.
+I never imagined that an ordinary day would introduce me to someone who would quietly change the way I looked at life.
 
-I love your kindness, your smile, and the way you make the world feel softer just by being in it. I want to keep making memories with you, laughing together, and building a beautiful life full of love, warmth, and forever moments.
+You came into my world without a warning, without a perfect plan, and without any promises.
 
-You are my forever, my favorite person, and my home. I love you more than words can say. 💖💌`;
+Yet somehow, you became one of the greatest blessings I have ever known.
+
+You taught me that not everything beautiful needs to be planned.
+
+Some of life's most precious moments happen.
+
+when we stop trying to control every detail and simply allow life to surprise us.
+
+You became my comfort on difficult days, my smile when life felt heavy, and the reminder that the universe sometimes knows exactly what we need before we do.
+
+If someone had asked me before we met what my future would look like, I would never have described you.
+
+And maybe that's the beauty of it. Because the best things in life rarely arrive when we're expecting them.
+
+They appear quietly, change us gently, and leave our hearts fuller than they were before.
+
+So if there's one thing I'll always be grateful for,
+
+it's that life didn't follow my plans.
+
+Because if it had, I might never have met you-the most beautiful, unexpected chapter of my story.
+
+♡`;
 
 const galleryImages = [
   "images/WhatsApp Image 2026-10-31 at 10.43.52 PM.jpeg",
@@ -109,34 +133,55 @@ const galleryImages = [
   "images/WhatsApp Image 2026-10-31 at 11.49.41 PM.jpeg"
 ];
 
-let audioCtx;
+let audioCtx = null;
 let isMusicPlaying = false;
 let melodyTimer = null;
 let heartsInterval = null;
 
-loveMessage.textContent = personalLoveLetter;
+function clamp(value, min, max) {
+  return Math.min(Math.max(value, min), max);
+}
+
+function safeSetText(element, value) {
+  if (element) {
+    element.textContent = value;
+  }
+}
+
+function initializeLoveMessage() {
+  safeSetText(loveMessage, personalLoveLetter);
+}
 
 function createBackgroundGallery() {
+  if (!backgroundGallery) return;
+
   backgroundGallery.innerHTML = '';
+
+  const placements = [
+    { left: '8%', top: '4%', rotate: '-10' },
+    { right: '8%', top: '10%', rotate: '9' },
+    { left: '18%', bottom: '12%', rotate: '7' },
+    { right: '12%', bottom: '16%', rotate: '-8' },
+    { left: '48%', top: '46%', rotate: '3' },
+    { left: '10%', top: '46%', rotate: '-5' },
+    { right: '18%', top: '48%', rotate: '6' },
+    { left: '60%', bottom: '16%', rotate: '-9' }
+  ];
 
   galleryImages.forEach((image, index) => {
     const polaroid = document.createElement('div');
     polaroid.className = 'polaroid';
     polaroid.style.backgroundImage = `url("${image}")`;
+    polaroid.style.setProperty('--delay', index);
 
-    const columns = 8;
-    const row = Math.floor(index / columns);
-    const col = index % columns;
+    const placement = placements[index % placements.length];
+    polaroid.style.setProperty('--tilt', `${placement.rotate}deg`);
 
-    const left = 4 + col * 12 + (row % 2) * 2;
-    const top = -10 + row * 18;
-
-    polaroid.style.left = `${left}%`;
-    polaroid.style.top = `${top}%`;
-    polaroid.style.setProperty('--angle', `${((index % 9) - 4) * 5}deg`);
-    polaroid.style.setProperty('--driftX', `${(index % 2 === 0 ? 1 : -1) * (10 + (index % 6) * 5)}px`);
-    polaroid.style.setProperty('--dropY', `${40 + row * 8}px`);
-    polaroid.style.animationDelay = `${index * 0.08}s`;
+    if (placement.left) polaroid.style.left = placement.left;
+    if (placement.right) polaroid.style.right = placement.right;
+    if (placement.top) polaroid.style.top = placement.top;
+    if (placement.bottom) polaroid.style.bottom = placement.bottom;
+    polaroid.style.transform = `rotate(${placement.rotate}deg)`;
 
     backgroundGallery.appendChild(polaroid);
   });
@@ -144,23 +189,22 @@ function createBackgroundGallery() {
 
 function startBackgroundScene() {
   createBackgroundGallery();
+
+  if (!backgroundGallery) return;
   backgroundGallery.classList.add('show');
 
   if (heartsInterval) clearInterval(heartsInterval);
-
-  heartsInterval = setInterval(() => {
-    for (let i = 0; i < 3; i++) {
-      createFallingHeart();
-    }
-  }, 220);
+  heartsInterval = setInterval(() => createFallingHeart(), 550);
 }
 
 function createMelody() {
-  const notes = [261.63, 329.63, 392.0, 329.63, 349.23, 440.0, 392.0, 329.63];
+  if (!audioCtx) return;
 
+  const notes = [261.63, 329.63, 392.0, 329.63, 349.23, 440.0, 392.0, 329.63];
   let index = 0;
+
   melodyTimer = setInterval(() => {
-    if (!audioCtx) return;
+    if (!audioCtx || audioCtx.state === 'closed') return;
 
     const oscillator = audioCtx.createOscillator();
     const gainNode = audioCtx.createGain();
@@ -184,8 +228,12 @@ function createMelody() {
 }
 
 function toggleMusic() {
+  if (!musicBtn) return;
+
   if (!audioCtx) {
-    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    const AudioCtor = window.AudioContext || window.webkitAudioContext;
+    if (!AudioCtor) return;
+    audioCtx = new AudioCtor();
   }
 
   if (!isMusicPlaying) {
@@ -209,35 +257,69 @@ function toggleMusic() {
   }
 }
 
-musicBtn.addEventListener('click', toggleMusic);
-
-noBtn.addEventListener('mouseover', moveButton);
-noBtn.addEventListener('touchstart', moveButton);
-
 function moveButton() {
-  const x = Math.floor(Math.random() * (window.innerWidth - noBtn.offsetWidth));
-  const y = Math.floor(Math.random() * (window.innerHeight - noBtn.offsetHeight));
+  if (!mainCard || !noBtn) return;
 
+  const buttonWidth = noBtn.offsetWidth || 120;
+  const buttonHeight = noBtn.offsetHeight || 52;
+  const padding = 18;
+
+  const maxX = Math.max(padding, window.innerWidth - buttonWidth - padding);
+  const maxY = Math.max(padding, window.innerHeight - buttonHeight - padding);
+
+  const x = clamp(
+    Math.random() * (maxX - padding) + padding,
+    padding,
+    maxX
+  );
+
+  const y = clamp(
+    Math.random() * (maxY - padding) + padding,
+    padding,
+    maxY
+  );
+
+  noBtn.style.position = 'fixed';
   noBtn.style.left = `${x}px`;
   noBtn.style.top = `${y}px`;
+  noBtn.style.transition = 'left 0.45s ease, top 0.45s ease';
 }
 
-yesBtn.addEventListener('click', () => {
+function createFallingHeart() {
+  const heart = document.createElement('div');
+  heart.classList.add('falling-heart');
+  heart.textContent = ['💖', '💗', '💘', '💝', '💕'][Math.floor(Math.random() * 5)];
+  heart.style.left = `${Math.random() * 100}vw`;
+  heart.style.top = '-10vh';
+  heart.style.setProperty('--drift', `${(Math.random() - 0.5) * 200}px`);
+  heart.style.animationDelay = `${Math.random() * 6}s`;
+  heart.style.fontSize = `${Math.random() * 18 + 14}px`;
+
+  document.body.appendChild(heart);
+  setTimeout(() => heart.remove(), 8000);
+}
+
+function handleYesClick() {
+  if (!mainCard || !question || !loveNote || !noBtn || !loveCard || !yesBtn) return;
+
   if (mainCard.classList.contains('is-celebrating')) return;
 
   mainCard.classList.add('is-celebrating');
-  question.innerHTML = 'I knew it! 🥰❤️';
+  question.textContent = 'I knew it! 🥰❤️';
   loveNote.style.display = 'block';
   noBtn.style.display = 'none';
 
   startBackgroundScene();
 
   loveCard.hidden = false;
-  loveCard.classList.add('show');
+  loveCard.classList.remove('show');
+  requestAnimationFrame(() => {
+    loveCard.classList.add('show');
+  });
 
   const heartIcons = ['💖', '💗', '💕', '💞', '💘', '❤️', '💓'];
 
-  for (let i = 0; i < 50; i++) {
+  for (let i = 0; i < 45; i++) {
     const heart = document.createElement('div');
     heart.classList.add('heart-particle');
     heart.textContent = heartIcons[Math.floor(Math.random() * heartIcons.length)];
@@ -247,30 +329,41 @@ yesBtn.addEventListener('click', () => {
 
     heart.style.left = `${startX}px`;
     heart.style.top = `${startY}px`;
-    heart.style.setProperty('--dx', `${(Math.random() - 0.5) * 320}px`);
-    heart.style.setProperty('--dy', `${-260 - Math.random() * 220}px`);
+    heart.style.setProperty('--dx', `${(Math.random() - 0.5) * 300}px`);
+    heart.style.setProperty('--dy', `${-240 - Math.random() * 220}px`);
 
     document.body.appendChild(heart);
-
     setTimeout(() => heart.remove(), 1700);
   }
-});
-
-function createFallingHeart() {
-  const heart = document.createElement('div');
-  heart.classList.add('falling-heart');
-  heart.textContent = ['💖', '💗', '💘', '💝', '💕'][Math.floor(Math.random() * 5)];
-  heart.style.left = `${Math.random() * 100}vw`;
-  heart.style.top = '-10vh';
-  heart.style.setProperty('--drift', `${(Math.random() - 0.5) * 260}px`);
-  heart.style.animationDelay = `${Math.random() * 6}s`;
-  heart.style.fontSize = `${Math.random() * 18 + 18}px`;
-
-  document.body.appendChild(heart);
-
-  setTimeout(() => heart.remove(), 9000);
 }
 
-for (let i = 0; i < 9; i++) {
-  setTimeout(() => createFallingHeart(), i * 180);
+function bindEvents() {
+  if (musicBtn) {
+    musicBtn.addEventListener('click', toggleMusic);
+  }
+
+  if (noBtn) {
+    noBtn.addEventListener('mouseover', moveButton);
+    noBtn.addEventListener('touchstart', moveButton);
+    noBtn.addEventListener('focus', moveButton);
+  }
+
+  if (yesBtn) {
+    yesBtn.addEventListener('click', handleYesClick);
+  }
+}
+
+function initialize() {
+  initializeLoveMessage();
+  bindEvents();
+
+  for (let i = 0; i < 6; i++) {
+    setTimeout(() => createFallingHeart(), i * 260);
+  }
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initialize);
+} else {
+  initialize();
 }
