@@ -11,9 +11,7 @@ const backgroundGallery = document.getElementById('backgroundGallery');
 const personalLoveLetter = `You were the best unplanned thing that ever happened in my life.
 
 I never searched for you.
-
 I never expected you.
-
 I never imagined that an ordinary day would introduce me to someone who would quietly change the way I looked at life.
 
 You came into my world without a warning, without a perfect plan, and without any promises.
