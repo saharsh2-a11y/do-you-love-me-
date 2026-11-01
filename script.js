@@ -157,8 +157,7 @@ function createBackgroundGallery() {
 
   backgroundGallery.innerHTML = '';
 
-  const columns = 10;
-  const rowGap = 14;
+  const columns = 8;
 
   galleryImages.forEach((image, index) => {
     const polaroid = document.createElement('div');
@@ -168,8 +167,8 @@ function createBackgroundGallery() {
 
     const row = Math.floor(index / columns);
     const col = index % columns;
-    const left = 4 + col * 9.3 + (row % 2 === 0 ? 0 : 1.5);
-    const top = 5 + row * rowGap;
+    const left = 4 + col * 11.5 + (row % 2 === 0 ? 0 : 1.2);
+    const top = 6 + row * 15.5;
 
     polaroid.style.left = `${left}%`;
     polaroid.style.top = `${top}%`;
@@ -258,20 +257,54 @@ function moveButton() {
   const buttonHeight = noBtn.offsetHeight || 52;
   const padding = 18;
 
-  const maxX = Math.max(padding, window.innerWidth - buttonWidth - padding);
-  const maxY = Math.max(padding, window.innerHeight - buttonHeight - padding);
-
-  const x = clamp(
-    Math.random() * (maxX - padding) + padding,
+  let x = clamp(
+    Math.random() * (window.innerWidth - buttonWidth - padding * 2) + padding,
     padding,
-    maxX
+    Math.max(padding, window.innerWidth - buttonWidth - padding)
   );
 
-  const y = clamp(
-    Math.random() * (maxY - padding) + padding,
+  let y = clamp(
+    Math.random() * (window.innerHeight - buttonHeight - padding * 2) + padding,
     padding,
-    maxY
+    Math.max(padding, window.innerHeight - buttonHeight - padding)
   );
+
+  if (yesBtn) {
+    const yesRect = yesBtn.getBoundingClientRect();
+    const avoidLeft = yesRect.left - 90;
+    const avoidRight = yesRect.right + 90;
+    const avoidTop = yesRect.top - 90;
+    const avoidBottom = yesRect.bottom + 90;
+
+    const candidateLeft = x + buttonWidth;
+    const candidateRight = x;
+    const candidateTop = y + buttonHeight;
+    const candidateBottom = y;
+
+    const overlaps =
+      candidateLeft > avoidLeft && candidateRight < avoidRight &&
+      candidateTop > avoidTop && candidateBottom < avoidBottom;
+
+    if (overlaps) {
+      const preferLeft = x < window.innerWidth / 2;
+      const preferTop = y < window.innerHeight / 2;
+
+      if (preferLeft) {
+        x = Math.max(padding, avoidLeft - buttonWidth - 10);
+      } else {
+        x = Math.min(window.innerWidth - buttonWidth - padding, avoidRight + 10);
+      }
+
+      if (preferTop) {
+        y = Math.max(padding, avoidTop - buttonHeight - 10);
+      } else {
+        y = Math.min(window.innerHeight - buttonHeight - padding, avoidBottom + 10);
+      }
+    }
+  }
+
+  x = clamp(x, padding, Math.max(padding, window.innerWidth - buttonWidth - padding));
+  y = clamp(y, padding, Math.max(padding, window.innerHeight - buttonHeight - padding));
 
   noBtn.style.position = 'fixed';
   noBtn.style.left = `${x}px`;

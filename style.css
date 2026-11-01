@@ -107,8 +107,8 @@ body::after {
 
 .polaroid {
   position: absolute;
-  width: clamp(100px, 10vw, 150px);
-  height: clamp(120px, 14vw, 180px);
+  width: clamp(92px, 10vw, 135px);
+  height: clamp(118px, 14vw, 170px);
   background-size: cover;
   background-position: center;
   border: 7px solid rgba(255,255,255,0.8);
