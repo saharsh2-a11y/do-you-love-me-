@@ -148,6 +148,15 @@ function safeSetText(element, value) {
   }
 }
 
+function attachImageFallbacks() {
+  document.querySelectorAll('img').forEach((img) => {
+    img.addEventListener('error', () => {
+      img.style.display = 'none';
+      img.parentElement?.style.setProperty('background', 'linear-gradient(135deg, rgba(255,122,173,0.18), rgba(217,199,255,0.18))');
+    });
+  });
+}
+
 function initializeLoveMessage() {
   safeSetText(loveMessage, personalLoveLetter);
 }
@@ -220,12 +229,29 @@ function createMelody() {
   }, 360);
 }
 
+function stopMusic() {
+  if (melodyTimer) {
+    clearInterval(melodyTimer);
+    melodyTimer = null;
+  }
+
+  if (audioCtx && audioCtx.state !== 'closed') {
+    audioCtx.close();
+    audioCtx = null;
+  }
+}
+
 function toggleMusic() {
   if (!musicBtn) return;
 
+  const AudioCtor = window.AudioContext || window.webkitAudioContext;
+  if (!AudioCtor) {
+    musicBtn.disabled = true;
+    musicBtn.textContent = '♫ N/A';
+    return;
+  }
+
   if (!audioCtx) {
-    const AudioCtor = window.AudioContext || window.webkitAudioContext;
-    if (!AudioCtor) return;
     audioCtx = new AudioCtor();
   }
 
@@ -242,70 +268,73 @@ function toggleMusic() {
     isMusicPlaying = false;
     musicBtn.classList.remove('is-playing');
     musicBtn.textContent = '♫ Music';
-
-    if (melodyTimer) {
-      clearInterval(melodyTimer);
-      melodyTimer = null;
-    }
+    stopMusic();
   }
 }
 
-function moveButton() {
-  if (!mainCard || !noBtn) return;
-
+function getSafeNoButtonPosition() {
+  const isMobile = window.innerWidth <= 560;
   const buttonWidth = noBtn.offsetWidth || 120;
   const buttonHeight = noBtn.offsetHeight || 52;
-  const padding = 18;
+  const padding = isMobile ? 12 : 18;
+  const maxX = Math.max(padding, window.innerWidth - buttonWidth - padding);
+  const maxY = Math.max(padding, window.innerHeight - buttonHeight - padding);
 
-  let x = clamp(
-    Math.random() * (window.innerWidth - buttonWidth - padding * 2) + padding,
-    padding,
-    Math.max(padding, window.innerWidth - buttonWidth - padding)
-  );
+  let x = clamp(Math.random() * (maxX - padding) + padding, padding, maxX);
+  let y = clamp(Math.random() * (maxY - padding) + padding, padding, maxY);
 
-  let y = clamp(
-    Math.random() * (window.innerHeight - buttonHeight - padding * 2) + padding,
-    padding,
-    Math.max(padding, window.innerHeight - buttonHeight - padding)
-  );
-
-  if (yesBtn) {
-    const yesRect = yesBtn.getBoundingClientRect();
-    const avoidLeft = yesRect.left - 90;
-    const avoidRight = yesRect.right + 90;
-    const avoidTop = yesRect.top - 90;
-    const avoidBottom = yesRect.bottom + 90;
-
-    const candidateLeft = x + buttonWidth;
-    const candidateRight = x;
-    const candidateTop = y + buttonHeight;
-    const candidateBottom = y;
-
-    const overlaps =
-      candidateLeft > avoidLeft && candidateRight < avoidRight &&
-      candidateTop > avoidTop && candidateBottom < avoidBottom;
-
-    if (overlaps) {
-      const preferLeft = x < window.innerWidth / 2;
-      const preferTop = y < window.innerHeight / 2;
-
-      if (preferLeft) {
-        x = Math.max(padding, avoidLeft - buttonWidth - 10);
-      } else {
-        x = Math.min(window.innerWidth - buttonWidth - padding, avoidRight + 10);
-      }
-
-      if (preferTop) {
-        y = Math.max(padding, avoidTop - buttonHeight - 10);
-      } else {
-        y = Math.min(window.innerHeight - buttonHeight - padding, avoidBottom + 10);
-      }
-    }
+  if (!yesBtn) {
+    return { x, y };
   }
 
-  x = clamp(x, padding, Math.max(padding, window.innerWidth - buttonWidth - padding));
-  y = clamp(y, padding, Math.max(padding, window.innerHeight - buttonHeight - padding));
+  const yesRect = yesBtn.getBoundingClientRect();
+  const minGap = isMobile ? 52 : 90;
+  const avoidLeft = yesRect.left - minGap;
+  const avoidRight = yesRect.right + minGap;
+  const avoidTop = yesRect.top - minGap;
+  const avoidBottom = yesRect.bottom + minGap;
 
+  let attempts = 0;
+
+  while (attempts < 40) {
+    const noLeft = x;
+    const noRight = x + buttonWidth;
+    const noTop = y;
+    const noBottom = y + buttonHeight;
+
+    const overlaps =
+      noRight > avoidLeft &&
+      noLeft < avoidRight &&
+      noBottom > avoidTop &&
+      noTop < avoidBottom;
+
+    if (!overlaps) break;
+
+    const preferLeft = x < window.innerWidth / 2;
+    const preferTop = y < window.innerHeight / 2;
+
+    x = preferLeft
+      ? Math.max(padding, avoidLeft - buttonWidth - 10)
+      : Math.min(maxX, avoidRight + 10);
+    y = preferTop
+      ? Math.max(padding, avoidTop - buttonHeight - 10)
+      : Math.min(maxY, avoidBottom + 10);
+
+    x = clamp(x, padding, maxX);
+    y = clamp(y, padding, maxY);
+    attempts += 1;
+  }
+
+  return {
+    x: clamp(x, padding, maxX),
+    y: clamp(y, padding, maxY)
+  };
+}
+
+function moveButton() {
+  if (!mainCard || !noBtn || mainCard.classList.contains('is-celebrating')) return;
+
+  const { x, y } = getSafeNoButtonPosition();
   noBtn.style.position = 'fixed';
   noBtn.style.left = `${x}px`;
   noBtn.style.top = `${y}px`;
@@ -378,11 +407,22 @@ function bindEvents() {
   if (yesBtn) {
     yesBtn.addEventListener('click', handleYesClick);
   }
+
+  window.addEventListener('resize', () => {
+    if (noBtn && noBtn.style.display !== 'none' && !mainCard?.classList.contains('is-celebrating')) {
+      moveButton();
+    }
+  });
 }
 
 function initialize() {
   initializeLoveMessage();
+  attachImageFallbacks();
   bindEvents();
+
+  if (noBtn) {
+    moveButton();
+  }
 
   for (let i = 0; i < 6; i++) {
     setTimeout(() => createFallingHeart(), i * 260);
