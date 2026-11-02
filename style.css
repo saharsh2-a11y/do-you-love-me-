@@ -334,7 +334,7 @@ button:active {
 }
 
 #noBtn {
-  position: fixed;
+  position: relative;
   background: linear-gradient(135deg, var(--red), var(--red-dark));
   color: var(--white);
   box-shadow: 0 10px 20px rgba(244,67,54,0.32);
@@ -357,6 +357,7 @@ button:active {
 
 .heart-particle,
 .falling-heart,
+.falling-photo,
 .sparkle-particle {
   position: fixed;
   pointer-events: none;
@@ -372,6 +373,16 @@ button:active {
   font-size: 24px;
   animation: fallHeart 8s linear infinite;
   opacity: 0.8;
+}
+
+.falling-photo {
+  border: 4px solid rgba(255,255,255,0.75);
+  border-radius: 8px;
+  background-size: cover;
+  background-position: center;
+  box-shadow: 0 16px 24px rgba(0,0,0,0.18), 0 0 16px rgba(255,122,173,0.15);
+  opacity: 0.8;
+  animation: fallPhoto 8s linear forwards;
 }
 
 .sparkle-particle {
@@ -465,6 +476,20 @@ button:active {
   }
   100% {
     transform: translate3d(var(--drift), 110vh, 0) scale(1.2);
+    opacity: 0;
+  }
+}
+
+@keyframes fallPhoto {
+  0% {
+    transform: translate3d(0, -12vh, 0) rotate(0deg) scale(0.8);
+    opacity: 0;
+  }
+  12% {
+    opacity: 0.9;
+  }
+  100% {
+    transform: translate3d(var(--drift), 110vh, 0) rotate(12deg) scale(1.05);
     opacity: 0;
   }
 }
