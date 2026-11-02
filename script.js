@@ -36,11 +36,102 @@ So if there's one thing I'll always be grateful for,
 
 it's that life didn't follow my plans.
 
-Because if it had, I might never have met you—the most beautiful, unexpected chapter of my story.
+Because if it had, I might never have met you-the most beautiful, unexpected chapter of my story.
 
 ♡`;
 
-const galleryImages = Array.isArray(window.galleryImages) ? window.galleryImages : [];
+const galleryImages = [
+  "images/WhatsApp Image 2026-10-31 at 10.43.52 PM.jpeg",
+  "images/WhatsApp Image 2026-10-31 at 10.43.54 PM.jpeg",
+  "images/WhatsApp Image 2026-10-31 at 10.43.58 PM.jpeg",
+  "images/WhatsApp Image 2026-10-31 at 10.43.59 PM (1).jpeg",
+  "images/WhatsApp Image 2026-10-31 at 10.43.59 PM (2).jpeg",
+  "images/WhatsApp Image 2026-10-31 at 10.43.59 PM (3).jpeg",
+  "images/WhatsApp Image 2026-10-31 at 10.43.59 PM.jpeg",
+  "images/WhatsApp Image 2026-10-31 at 10.44.00 PM (1).jpeg",
+  "images/WhatsApp Image 2026-10-31 at 10.44.00 PM (2).jpeg",
+  "images/WhatsApp Image 2026-10-31 at 10.44.00 PM.jpeg",
+  "images/WhatsApp Image 2026-10-31 at 10.44.01 PM (1).jpeg",
+  "images/WhatsApp Image 2026-10-31 at 10.44.01 PM (2).jpeg",
+  "images/WhatsApp Image 2026-10-31 at 10.44.01 PM (3).jpeg",
+  "images/WhatsApp Image 2026-10-31 at 10.44.01 PM.jpeg",
+  "images/WhatsApp Image 2026-10-31 at 10.44.02 PM (1).jpeg",
+  "images/WhatsApp Image 2026-10-31 at 10.44.02 PM (2).jpeg",
+  "images/WhatsApp Image 2026-10-31 at 10.44.02 PM.jpeg",
+  "images/WhatsApp Image 2026-10-31 at 10.44.03 PM (1).jpeg",
+  "images/WhatsApp Image 2026-10-31 at 10.44.03 PM (2).jpeg",
+  "images/WhatsApp Image 2026-10-31 at 10.44.03 PM (3).jpeg",
+  "images/WhatsApp Image 2026-10-31 at 10.44.03 PM.jpeg",
+  "images/WhatsApp Image 2026-10-31 at 10.44.04 PM (1).jpeg",
+  "images/WhatsApp Image 2026-10-31 at 10.44.04 PM (2).jpeg",
+  "images/WhatsApp Image 2026-10-31 at 10.44.04 PM.jpeg",
+  "images/WhatsApp Image 2026-10-31 at 10.46.17 PM.jpeg",
+  "images/WhatsApp Image 2026-10-31 at 10.46.18 PM.jpeg",
+  "images/WhatsApp Image 2026-10-31 at 10.46.20 PM.jpeg",
+  "images/WhatsApp Image 2026-10-31 at 10.46.21 PM.jpeg",
+  "images/WhatsApp Image 2026-10-31 at 10.46.23 PM.jpeg",
+  "images/WhatsApp Image 2026-10-31 at 10.46.35 PM (1).jpeg",
+  "images/WhatsApp Image 2026-10-31 at 10.46.35 PM.jpeg",
+  "images/WhatsApp Image 2026-10-31 at 10.46.36 PM (1).jpeg",
+  "images/WhatsApp Image 2026-10-31 at 10.46.36 PM.jpeg",
+  "images/WhatsApp Image 2026-10-31 at 10.48.05 PM.jpeg",
+  "images/WhatsApp Image 2026-10-31 at 10.48.06 PM.jpeg",
+  "images/WhatsApp Image 2026-10-31 at 10.48.09 PM.jpeg",
+  "images/WhatsApp Image 2026-10-31 at 10.48.12 PM.jpeg",
+  "images/WhatsApp Image 2026-10-31 at 10.48.13 PM.jpeg",
+  "images/WhatsApp Image 2026-10-31 at 10.48.28 PM.jpeg",
+  "images/WhatsApp Image 2026-10-31 at 10.48.30 PM.jpeg",
+  "images/WhatsApp Image 2026-10-31 at 10.48.33 PM.jpeg",
+  "images/WhatsApp Image 2026-10-31 at 10.48.36 PM.jpeg",
+  "images/WhatsApp Image 2026-10-31 at 10.48.37 PM.jpeg",
+  "images/WhatsApp Image 2026-10-31 at 10.48.38 PM.jpeg",
+  "images/WhatsApp Image 2026-10-31 at 10.48.42 PM.jpeg",
+  "images/WhatsApp Image 2026-10-31 at 10.48.48 PM.jpeg",
+  "images/WhatsApp Image 2026-10-31 at 10.48.49 PM.jpeg",
+  "images/WhatsApp Image 2026-10-31 at 10.49.02 PM.jpeg",
+  "images/WhatsApp Image 2026-10-31 at 10.49.06 PM.jpeg",
+  "images/WhatsApp Image 2026-10-31 at 10.49.13 PM.jpeg",
+  "images/WhatsApp Image 2026-10-31 at 10.49.14 PM.jpeg",
+  "images/WhatsApp Image 2026-10-31 at 10.49.16 PM.jpeg",
+  "images/WhatsApp Image 2026-10-31 at 10.49.18 PM.jpeg",
+  "images/WhatsApp Image 2026-10-31 at 10.49.21 PM.jpeg",
+  "images/WhatsApp Image 2026-10-31 at 10.49.24 PM.jpeg",
+  "images/WhatsApp Image 2026-10-31 at 10.49.27 PM.jpeg",
+  "images/WhatsApp Image 2026-10-31 at 10.49.30 PM.jpeg",
+  "images/WhatsApp Image 2026-10-31 at 10.49.40 PM.jpeg",
+  "images/WhatsApp Image 2026-10-31 at 10.49.41 PM.jpeg",
+  "images/WhatsApp Image 2026-10-31 at 10.49.43 PM.jpeg",
+  "images/WhatsApp Image 2026-10-31 at 10.49.44 PM.jpeg",
+  "images/WhatsApp Image 2026-10-31 at 10.49.46 PM.jpeg",
+  "images/WhatsApp Image 2026-10-31 at 10.49.48 PM.jpeg",
+  "images/WhatsApp Image 2026-10-31 at 10.49.49 PM.jpeg",
+  "images/WhatsApp Image 2026-10-31 at 10.49.52 PM.jpeg",
+  "images/WhatsApp Image 2026-10-31 at 10.49.56 PM.jpeg",
+  "images/WhatsApp Image 2026-10-31 at 10.49.57 PM (1).jpeg",
+  "images/WhatsApp Image 2026-10-31 at 10.49.57 PM.jpeg",
+  "images/WhatsApp Image 2026-10-31 at 10.49.58 PM (1).jpeg",
+  "images/WhatsApp Image 2026-10-31 at 10.49.58 PM.jpeg",
+  "images/WhatsApp Image 2026-10-31 at 10.49.59 PM.jpeg",
+  "images/WhatsApp Image 2026-10-31 at 10.50.00 PM.jpeg",
+  "images/WhatsApp Image 2026-10-31 at 10.50.01 PM.jpeg",
+  "images/WhatsApp Image 2026-10-31 at 10.50.02 PM (1).jpeg",
+  "images/WhatsApp Image 2026-10-31 at 10.50.02 PM (2).jpeg",
+  "images/WhatsApp Image 2026-10-31 at 10.50.02 PM.jpeg",
+  "images/WhatsApp Image 2026-10-31 at 10.50.03 PM (1).jpeg",
+  "images/WhatsApp Image 2026-10-31 at 10.50.03 PM.jpeg",
+  "images/WhatsApp Image 2026-10-31 at 10.50.04 PM (1).jpeg",
+  "images/WhatsApp Image 2026-10-31 at 10.50.04 PM.jpeg",
+  "images/WhatsApp Image 2026-10-31 at 10.50.07 PM.jpeg",
+  "images/WhatsApp Image 2026-10-31 at 10.50.08 PM (1).jpeg",
+  "images/WhatsApp Image 2026-10-31 at 10.50.08 PM.jpeg",
+  "images/WhatsApp Image 2026-10-31 at 11.49.37 PM (1).jpeg",
+  "images/WhatsApp Image 2026-10-31 at 11.49.37 PM (2).jpeg",
+  "images/WhatsApp Image 2026-10-31 at 11.49.37 PM.jpeg",
+  "images/WhatsApp Image 2026-10-31 at 11.49.38 PM.jpeg",
+  "images/WhatsApp Image 2026-10-31 at 11.49.39 PM (1).jpeg",
+  "images/WhatsApp Image 2026-10-31 at 11.49.39 PM.jpeg",
+  "images/WhatsApp Image 2026-10-31 at 11.49.41 PM.jpeg"
+];
 
 let audioCtx = null;
 let isMusicPlaying = false;
@@ -61,8 +152,20 @@ function initializeLoveMessage() {
   safeSetText(loveMessage, personalLoveLetter);
 }
 
+function setInitialNoButtonPosition() {
+  if (!noBtn) return;
+
+  const rect = noBtn.getBoundingClientRect();
+  noBtn.style.position = 'fixed';
+  noBtn.style.left = `${rect.left}px`;
+  noBtn.style.top = `${rect.top}px`;
+  noBtn.style.width = `${Math.max(rect.width, 110)}px`;
+  noBtn.style.height = `${Math.max(rect.height, 48)}px`;
+  noBtn.style.transition = 'left 0.45s ease, top 0.45s ease';
+}
+
 function createBackgroundGallery() {
-  if (!backgroundGallery || !Array.isArray(galleryImages) || galleryImages.length === 0) return;
+  if (!backgroundGallery) return;
 
   backgroundGallery.innerHTML = '';
 
@@ -96,7 +199,7 @@ function startBackgroundScene() {
   backgroundGallery.classList.add('show');
 
   if (heartsInterval) clearInterval(heartsInterval);
-  heartsInterval = setInterval(() => createFallingHeart(), 550);
+  heartsInterval = setInterval(() => createFallingPhoto(), 550);
 }
 
 function createMelody() {
@@ -134,12 +237,7 @@ function toggleMusic() {
 
   if (!audioCtx) {
     const AudioCtor = window.AudioContext || window.webkitAudioContext;
-    if (!AudioCtor) {
-      musicBtn.disabled = true;
-      musicBtn.textContent = '♫ N/A';
-      return;
-    }
-
+    if (!AudioCtor) return;
     audioCtx = new AudioCtor();
   }
 
@@ -164,20 +262,8 @@ function toggleMusic() {
   }
 }
 
-function positionNoButton() {
-  if (!noBtn) return;
-
-  const preferredX = clamp(window.innerWidth * 0.7, 110, window.innerWidth - 140);
-  const preferredY = clamp(window.innerHeight * 0.72, 90, window.innerHeight - 110);
-
-  noBtn.style.position = 'fixed';
-  noBtn.style.left = `${preferredX}px`;
-  noBtn.style.top = `${preferredY}px`;
-  noBtn.style.transition = 'left 0.45s ease, top 0.45s ease';
-}
-
 function moveButton() {
-  if (!mainCard || !noBtn || mainCard.classList.contains('is-celebrating')) return;
+  if (!mainCard || !noBtn) return;
 
   const buttonWidth = noBtn.offsetWidth || 120;
   const buttonHeight = noBtn.offsetHeight || 52;
@@ -236,6 +322,23 @@ function moveButton() {
   noBtn.style.left = `${x}px`;
   noBtn.style.top = `${y}px`;
   noBtn.style.transition = 'left 0.45s ease, top 0.45s ease';
+}
+
+function createFallingPhoto() {
+  const photo = document.createElement('div');
+  const image = galleryImages[Math.floor(Math.random() * galleryImages.length)];
+
+  photo.classList.add('falling-photo');
+  photo.style.backgroundImage = `url("${image}")`;
+  photo.style.left = `${Math.random() * 100}vw`;
+  photo.style.top = '-12vh';
+  photo.style.width = `${Math.random() * 58 + 46}px`;
+  photo.style.height = `${Math.random() * 74 + 56}px`;
+  photo.style.setProperty('--drift', `${(Math.random() - 0.5) * 220}px`);
+  photo.style.animationDelay = `${Math.random() * 4}s`;
+
+  document.body.appendChild(photo);
+  setTimeout(() => photo.remove(), 8500);
 }
 
 function createFallingHeart() {
@@ -304,27 +407,16 @@ function bindEvents() {
   if (yesBtn) {
     yesBtn.addEventListener('click', handleYesClick);
   }
-
-  window.addEventListener('resize', () => {
-    if (noBtn && noBtn.style.display !== 'none' && !mainCard?.classList.contains('is-celebrating')) {
-      positionNoButton();
-    }
-  });
 }
 
 function initialize() {
   initializeLoveMessage();
   bindEvents();
+  setInitialNoButtonPosition();
+  window.addEventListener('resize', setInitialNoButtonPosition);
 
-  requestAnimationFrame(() => {
-    if (noBtn) {
-      positionNoButton();
-      moveButton();
-    }
-  });
-
-  for (let i = 0; i < 6; i++) {
-    setTimeout(() => createFallingHeart(), i * 260);
+  for (let i = 0; i < 8; i++) {
+    setTimeout(() => createFallingPhoto(), i * 260);
   }
 }
 
