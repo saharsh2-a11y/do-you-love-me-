@@ -40,19 +40,7 @@ Because if it had, I might never have met you—the most beautiful, unexpected c
 
 ♡`;
 
-const galleryImages = Array.isArray(window.galleryImages) && window.galleryImages.length
-  ? window.galleryImages
-  : [
-      'images/WhatsApp Image 2026-10-31 at 10.43.52 PM.jpeg',
-      'images/WhatsApp Image 2026-10-31 at 10.43.54 PM.jpeg',
-      'images/WhatsApp Image 2026-10-31 at 10.44.00 PM.jpeg',
-      'images/WhatsApp Image 2026-10-31 at 10.46.17 PM.jpeg',
-      'images/WhatsApp Image 2026-10-31 at 10.48.05 PM.jpeg',
-      'images/WhatsApp Image 2026-10-31 at 10.49.02 PM.jpeg',
-      'images/WhatsApp Image 2026-10-31 at 10.49.56 PM.jpeg',
-      'images/WhatsApp Image 2026-10-31 at 10.50.02 PM.jpeg',
-      'images/WhatsApp Image 2026-10-31 at 11.49.37 PM.jpeg'
-    ];
+const galleryImages = Array.isArray(window.galleryImages) ? window.galleryImages : [];
 
 let audioCtx = null;
 let isMusicPlaying = false;
@@ -69,24 +57,12 @@ function safeSetText(element, value) {
   }
 }
 
-function attachImageFallbacks() {
-  document.querySelectorAll('img').forEach((img) => {
-    img.addEventListener('error', () => {
-      img.style.display = 'none';
-      img.parentElement?.style.setProperty(
-        'background',
-        'linear-gradient(135deg, rgba(255,122,173,0.18), rgba(217,199,255,0.18))'
-      );
-    });
-  });
-}
-
 function initializeLoveMessage() {
   safeSetText(loveMessage, personalLoveLetter);
 }
 
 function createBackgroundGallery() {
-  if (!backgroundGallery) return;
+  if (!backgroundGallery || !Array.isArray(galleryImages) || galleryImages.length === 0) return;
 
   backgroundGallery.innerHTML = '';
 
@@ -153,29 +129,17 @@ function createMelody() {
   }, 360);
 }
 
-function stopMusic() {
-  if (melodyTimer) {
-    clearInterval(melodyTimer);
-    melodyTimer = null;
-  }
-
-  if (audioCtx && audioCtx.state !== 'closed') {
-    audioCtx.close();
-    audioCtx = null;
-  }
-}
-
 function toggleMusic() {
   if (!musicBtn) return;
 
-  const AudioCtor = window.AudioContext || window.webkitAudioContext;
-  if (!AudioCtor) {
-    musicBtn.disabled = true;
-    musicBtn.textContent = '♫ N/A';
-    return;
-  }
-
   if (!audioCtx) {
+    const AudioCtor = window.AudioContext || window.webkitAudioContext;
+    if (!AudioCtor) {
+      musicBtn.disabled = true;
+      musicBtn.textContent = '♫ N/A';
+      return;
+    }
+
     audioCtx = new AudioCtor();
   }
 
@@ -192,73 +156,82 @@ function toggleMusic() {
     isMusicPlaying = false;
     musicBtn.classList.remove('is-playing');
     musicBtn.textContent = '♫ Music';
-    stopMusic();
+
+    if (melodyTimer) {
+      clearInterval(melodyTimer);
+      melodyTimer = null;
+    }
   }
 }
 
-function getSafeNoButtonPosition() {
-  const isMobile = window.innerWidth <= 560;
-  const buttonWidth = noBtn.offsetWidth || 120;
-  const buttonHeight = noBtn.offsetHeight || 52;
-  const padding = isMobile ? 12 : 18;
-  const maxX = Math.max(padding, window.innerWidth - buttonWidth - padding);
-  const maxY = Math.max(padding, window.innerHeight - buttonHeight - padding);
+function positionNoButton() {
+  if (!noBtn) return;
 
-  let x = clamp(Math.random() * (maxX - padding) + padding, padding, maxX);
-  let y = clamp(Math.random() * (maxY - padding) + padding, padding, maxY);
+  const preferredX = clamp(window.innerWidth * 0.7, 110, window.innerWidth - 140);
+  const preferredY = clamp(window.innerHeight * 0.72, 90, window.innerHeight - 110);
 
-  if (!yesBtn) {
-    return { x, y };
-  }
-
-  const yesRect = yesBtn.getBoundingClientRect();
-  const minGap = isMobile ? 52 : 90;
-  const avoidLeft = yesRect.left - minGap;
-  const avoidRight = yesRect.right + minGap;
-  const avoidTop = yesRect.top - minGap;
-  const avoidBottom = yesRect.bottom + minGap;
-
-  let attempts = 0;
-
-  while (attempts < 40) {
-    const noLeft = x;
-    const noRight = x + buttonWidth;
-    const noTop = y;
-    const noBottom = y + buttonHeight;
-
-    const overlaps =
-      noRight > avoidLeft &&
-      noLeft < avoidRight &&
-      noBottom > avoidTop &&
-      noTop < avoidBottom;
-
-    if (!overlaps) break;
-
-    const preferLeft = x < window.innerWidth / 2;
-    const preferTop = y < window.innerHeight / 2;
-
-    x = preferLeft
-      ? Math.max(padding, avoidLeft - buttonWidth - 10)
-      : Math.min(maxX, avoidRight + 10);
-    y = preferTop
-      ? Math.max(padding, avoidTop - buttonHeight - 10)
-      : Math.min(maxY, avoidBottom + 10);
-
-    x = clamp(x, padding, maxX);
-    y = clamp(y, padding, maxY);
-    attempts += 1;
-  }
-
-  return {
-    x: clamp(x, padding, maxX),
-    y: clamp(y, padding, maxY)
-  };
+  noBtn.style.position = 'fixed';
+  noBtn.style.left = `${preferredX}px`;
+  noBtn.style.top = `${preferredY}px`;
+  noBtn.style.transition = 'left 0.45s ease, top 0.45s ease';
 }
 
 function moveButton() {
   if (!mainCard || !noBtn || mainCard.classList.contains('is-celebrating')) return;
 
-  const { x, y } = getSafeNoButtonPosition();
+  const buttonWidth = noBtn.offsetWidth || 120;
+  const buttonHeight = noBtn.offsetHeight || 52;
+  const padding = 18;
+
+  let x = clamp(
+    Math.random() * (window.innerWidth - buttonWidth - padding * 2) + padding,
+    padding,
+    Math.max(padding, window.innerWidth - buttonWidth - padding)
+  );
+
+  let y = clamp(
+    Math.random() * (window.innerHeight - buttonHeight - padding * 2) + padding,
+    padding,
+    Math.max(padding, window.innerHeight - buttonHeight - padding)
+  );
+
+  if (yesBtn) {
+    const yesRect = yesBtn.getBoundingClientRect();
+    const avoidLeft = yesRect.left - 90;
+    const avoidRight = yesRect.right + 90;
+    const avoidTop = yesRect.top - 90;
+    const avoidBottom = yesRect.bottom + 90;
+
+    const candidateLeft = x + buttonWidth;
+    const candidateRight = x;
+    const candidateTop = y + buttonHeight;
+    const candidateBottom = y;
+
+    const overlaps =
+      candidateLeft > avoidLeft && candidateRight < avoidRight &&
+      candidateTop > avoidTop && candidateBottom < avoidBottom;
+
+    if (overlaps) {
+      const preferLeft = x < window.innerWidth / 2;
+      const preferTop = y < window.innerHeight / 2;
+
+      if (preferLeft) {
+        x = Math.max(padding, avoidLeft - buttonWidth - 10);
+      } else {
+        x = Math.min(window.innerWidth - buttonWidth - padding, avoidRight + 10);
+      }
+
+      if (preferTop) {
+        y = Math.max(padding, avoidTop - buttonHeight - 10);
+      } else {
+        y = Math.min(window.innerHeight - buttonHeight - padding, avoidBottom + 10);
+      }
+    }
+  }
+
+  x = clamp(x, padding, Math.max(padding, window.innerWidth - buttonWidth - padding));
+  y = clamp(y, padding, Math.max(padding, window.innerHeight - buttonHeight - padding));
+
   noBtn.style.position = 'fixed';
   noBtn.style.left = `${x}px`;
   noBtn.style.top = `${y}px`;
@@ -334,19 +307,21 @@ function bindEvents() {
 
   window.addEventListener('resize', () => {
     if (noBtn && noBtn.style.display !== 'none' && !mainCard?.classList.contains('is-celebrating')) {
-      moveButton();
+      positionNoButton();
     }
   });
 }
 
 function initialize() {
   initializeLoveMessage();
-  attachImageFallbacks();
   bindEvents();
 
-  if (noBtn) {
-    moveButton();
-  }
+  requestAnimationFrame(() => {
+    if (noBtn) {
+      positionNoButton();
+      moveButton();
+    }
+  });
 
   for (let i = 0; i < 6; i++) {
     setTimeout(() => createFallingHeart(), i * 260);
