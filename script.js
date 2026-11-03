@@ -7,6 +7,7 @@ const loveMessage = document.getElementById('loveMessage');
 const loveNote = document.getElementById('loveNote');
 const musicBtn = document.getElementById('musicBtn');
 const backgroundGallery = document.getElementById('backgroundGallery');
+const buttonsRow = document.querySelector('.buttons');
 
 const personalLoveLetter = `You were the best unplanned thing that ever happened in my life.
 
@@ -46,26 +47,54 @@ let audioCtx = null;
 let isMusicPlaying = false;
 let melodyTimer = null;
 let heartsInterval = null;
+let noButtonHasMoved = false;
 
 function clamp(value, min, max) {
   return Math.min(Math.max(value, min), max);
 }
 
 function safeSetText(element, value) {
-  if (element) {
-    element.textContent = value;
-  }
+  if (element) element.textContent = value;
 }
 
 function initializeLoveMessage() {
   safeSetText(loveMessage, personalLoveLetter);
 }
 
+// Keep YES and NO together in the normal layout on every screen size.
+function setupButtonLayout() {
+  if (buttonsRow) {
+    buttonsRow.style.display = 'flex';
+    buttonsRow.style.flexDirection = 'row';
+    buttonsRow.style.flexWrap = 'nowrap';
+    buttonsRow.style.justifyContent = 'center';
+    buttonsRow.style.alignItems = 'center';
+    buttonsRow.style.gap = 'clamp(8px, 3vw, 20px)';
+    buttonsRow.style.minHeight = '52px';
+  }
+
+  [yesBtn, noBtn].forEach((button) => {
+    if (!button) return;
+    button.style.flex = '0 1 auto';
+    button.style.width = 'auto';
+    button.style.minWidth = '0';
+    button.style.paddingInline = 'clamp(16px, 5vw, 30px)';
+    button.style.whiteSpace = 'nowrap';
+  });
+
+  if (noBtn && !noButtonHasMoved) {
+    noBtn.style.position = 'relative';
+    noBtn.style.left = 'auto';
+    noBtn.style.top = 'auto';
+    noBtn.style.width = 'auto';
+    noBtn.style.height = 'auto';
+  }
+}
+
 function createBackgroundGallery() {
-  if (!backgroundGallery || !Array.isArray(galleryImages) || galleryImages.length === 0) return;
+  if (!backgroundGallery || galleryImages.length === 0) return;
 
   backgroundGallery.innerHTML = '';
-
   const columns = 8;
 
   galleryImages.forEach((image, index) => {
@@ -76,27 +105,22 @@ function createBackgroundGallery() {
 
     const row = Math.floor(index / columns);
     const col = index % columns;
-    const left = 4 + col * 11.5 + (row % 2 === 0 ? 0 : 1.2);
-    const top = 6 + row * 15.5;
-
-    polaroid.style.left = `${left}%`;
-    polaroid.style.top = `${top}%`;
+    polaroid.style.left = `${4 + col * 11.5 + (row % 2 === 0 ? 0 : 1.2)}%`;
+    polaroid.style.top = `${6 + row * 15.5}%`;
     polaroid.style.setProperty('--angle', `${((index % 9) - 4) * 5}deg`);
     polaroid.style.setProperty('--driftX', `${(index % 2 === 0 ? 1 : -1) * (8 + (index % 6) * 4)}px`);
     polaroid.style.setProperty('--dropY', `${18 + row * 8}px`);
-
     backgroundGallery.appendChild(polaroid);
   });
 }
 
 function startBackgroundScene() {
   createBackgroundGallery();
-
   if (!backgroundGallery) return;
   backgroundGallery.classList.add('show');
 
   if (heartsInterval) clearInterval(heartsInterval);
-  heartsInterval = setInterval(() => createFallingHeart(), 550);
+  heartsInterval = setInterval(createFallingHeart, 550);
 }
 
 function createMelody() {
@@ -104,27 +128,22 @@ function createMelody() {
 
   const notes = [261.63, 329.63, 392.0, 329.63, 349.23, 440.0, 392.0, 329.63];
   let index = 0;
-
   melodyTimer = setInterval(() => {
     if (!audioCtx || audioCtx.state === 'closed') return;
 
     const oscillator = audioCtx.createOscillator();
     const gainNode = audioCtx.createGain();
-
     oscillator.type = 'sine';
     oscillator.frequency.value = notes[index % notes.length];
     gainNode.gain.value = 0.0001;
-
     oscillator.connect(gainNode);
     gainNode.connect(audioCtx.destination);
 
     const now = audioCtx.currentTime;
     gainNode.gain.exponentialRampToValueAtTime(0.05, now + 0.03);
     gainNode.gain.exponentialRampToValueAtTime(0.0001, now + 0.35);
-
     oscillator.start(now);
     oscillator.stop(now + 0.38);
-
     index += 1;
   }, 360);
 }
@@ -139,7 +158,6 @@ function toggleMusic() {
       musicBtn.textContent = '♫ N/A';
       return;
     }
-
     audioCtx = new AudioCtor();
   }
 
@@ -148,15 +166,11 @@ function toggleMusic() {
     musicBtn.classList.add('is-playing');
     musicBtn.textContent = '♫ On';
     createMelody();
-
-    if (audioCtx.state === 'suspended') {
-      audioCtx.resume();
-    }
+    if (audioCtx.state === 'suspended') audioCtx.resume();
   } else {
     isMusicPlaying = false;
     musicBtn.classList.remove('is-playing');
     musicBtn.textContent = '♫ Music';
-
     if (melodyTimer) {
       clearInterval(melodyTimer);
       melodyTimer = null;
@@ -164,96 +178,50 @@ function toggleMusic() {
   }
 }
 
-// Keep NO beside YES on first render (and after resize). It becomes free-moving
-// only after the user tries to interact with it.
+// On initial render and resize, restore the normal-flow side-by-side layout.
 function positionNoButton() {
-  if (!noBtn || !yesBtn) return;
-
-  noBtn.style.position = 'fixed';
-  noBtn.style.width = 'auto';
-  noBtn.style.height = 'auto';
-
-  const yesRect = yesBtn.getBoundingClientRect();
-  const noRect = noBtn.getBoundingClientRect();
-  const gap = 12;
-  const padding = 12;
-  const width = noRect.width;
-  const height = noRect.height;
-
-  let left = yesRect.right + gap;
-  if (left + width > window.innerWidth - padding) {
-    left = yesRect.left - width - gap;
-  }
-  left = clamp(left, padding, Math.max(padding, window.innerWidth - width - padding));
-
-  const top = clamp(
-    yesRect.top + (yesRect.height - height) / 2,
-    padding,
-    Math.max(padding, window.innerHeight - height - padding)
-  );
-
-  noBtn.style.left = `${left}px`;
-  noBtn.style.top = `${top}px`;
-  noBtn.style.transition = 'left 0.45s ease, top 0.45s ease';
+  if (!noBtn || noButtonHasMoved) return;
+  setupButtonLayout();
 }
 
 function moveButton() {
   if (!mainCard || !noBtn || !yesBtn || mainCard.classList.contains('is-celebrating')) return;
 
   const padding = 12;
-  const rect = mainCard.getBoundingClientRect();
-  const noRect = noBtn.getBoundingClientRect();
-  const width = noRect.width;
-  const height = noRect.height;
-
-  // Use the visible card area as the movement region, with a viewport-safe fallback
-  // for smaller screens where the card is too narrow to contain the button.
-  const minX = Math.max(padding, rect.left + padding);
-  const maxX = Math.min(window.innerWidth - width - padding, rect.right - width - padding);
-  const minY = Math.max(padding, rect.top + padding);
-  const maxY = Math.min(window.innerHeight - height - padding, rect.bottom - height - padding);
-  const canFitInsideCard = maxX >= minX && maxY >= minY;
-  const rangeMinX = canFitInsideCard ? minX : padding;
-  const rangeMaxX = canFitInsideCard ? maxX : Math.max(padding, window.innerWidth - width - padding);
-  const rangeMinY = canFitInsideCard ? minY : padding;
-  const rangeMaxY = canFitInsideCard ? maxY : Math.max(padding, window.innerHeight - height - padding);
-
-  let left = rangeMinX + Math.random() * Math.max(0, rangeMaxX - rangeMinX);
-  let top = rangeMinY + Math.random() * Math.max(0, rangeMaxY - rangeMinY);
-
+  const cardRect = mainCard.getBoundingClientRect();
   const yesRect = yesBtn.getBoundingClientRect();
-  const noRight = left + width;
-  const noBottom = top + height;
-  const overlapsYes =
-    noRight > yesRect.left - 12 &&
-    left < yesRect.right + 12 &&
-    noBottom > yesRect.top - 12 &&
-    top < yesRect.bottom + 12;
+  const buttonRect = noBtn.getBoundingClientRect();
+  const width = buttonRect.width;
+  const height = buttonRect.height;
 
-  if (overlapsYes) {
-    const candidates = [
-      { left: yesRect.left - width - 16, top },
-      { left: yesRect.right + 16, top },
-      { left, top: yesRect.top - height - 16 },
-      { left, top: yesRect.bottom + 16 }
-    ].map((point) => ({
-      left: clamp(point.left, rangeMinX, rangeMaxX),
-      top: clamp(point.top, rangeMinY, rangeMaxY)
-    }));
-    const safeCandidate = candidates.find((point) => {
-      const right = point.left + width;
-      const bottom = point.top + height;
-      return right <= yesRect.left - 12 || point.left >= yesRect.right + 12 ||
-        bottom <= yesRect.top - 12 || point.top >= yesRect.bottom + 12;
-    });
-    if (safeCandidate) {
-      left = safeCandidate.left;
-      top = safeCandidate.top;
-    }
+  // Constrain the escape area to the card intersected with the visible viewport.
+  const minX = Math.max(padding, cardRect.left + padding);
+  const maxX = Math.min(window.innerWidth - width - padding, cardRect.right - width - padding);
+  const minY = Math.max(padding, cardRect.top + padding);
+  const maxY = Math.min(window.innerHeight - height - padding, cardRect.bottom - height - padding);
+  if (maxX < minX || maxY < minY) return;
+
+  let left = minX + Math.random() * (maxX - minX);
+  let top = minY + Math.random() * (maxY - minY);
+  const gap = 12;
+
+  // Try several card-contained positions so NO avoids YES when there is room.
+  for (let attempt = 0; attempt < 20; attempt += 1) {
+    const overlapsYes =
+      left + width > yesRect.left - gap && left < yesRect.right + gap &&
+      top + height > yesRect.top - gap && top < yesRect.bottom + gap;
+    if (!overlapsYes) break;
+    left = minX + Math.random() * (maxX - minX);
+    top = minY + Math.random() * (maxY - minY);
   }
 
-  noBtn.style.left = `${left}px`;
-  noBtn.style.top = `${top}px`;
+  noButtonHasMoved = true;
+  noBtn.style.position = 'fixed';
+  noBtn.style.width = `${width}px`;
+  noBtn.style.height = `${height}px`;
+  noBtn.style.left = `${clamp(left, minX, maxX)}px`;
+  noBtn.style.top = `${clamp(top, minY, maxY)}px`;
+  noBtn.style.transition = 'left 0.35s ease, top 0.35s ease';
 }
 
 function createFallingHeart() {
@@ -265,74 +233,61 @@ function createFallingHeart() {
   heart.style.setProperty('--drift', `${(Math.random() - 0.5) * 200}px`);
   heart.style.animationDelay = `${Math.random() * 6}s`;
   heart.style.fontSize = `${Math.random() * 18 + 14}px`;
-
   document.body.appendChild(heart);
   setTimeout(() => heart.remove(), 8000);
 }
 
 function handleYesClick() {
   if (!mainCard || !question || !loveNote || !noBtn || !loveCard || !yesBtn) return;
-
   if (mainCard.classList.contains('is-celebrating')) return;
 
   mainCard.classList.add('is-celebrating');
   question.textContent = 'I knew it! 🥰❤️';
   loveNote.style.display = 'block';
   noBtn.style.display = 'none';
-
   startBackgroundScene();
 
   loveCard.hidden = false;
   loveCard.classList.remove('show');
-  requestAnimationFrame(() => {
-    loveCard.classList.add('show');
-  });
+  requestAnimationFrame(() => loveCard.classList.add('show'));
 
   const heartIcons = ['💖', '💗', '💕', '💞', '💘', '❤️', '💓'];
+  const yesRect = yesBtn.getBoundingClientRect();
+  const startX = yesRect.left + yesRect.width / 2;
+  const startY = yesRect.top + yesRect.height / 2;
 
   for (let i = 0; i < 45; i++) {
     const heart = document.createElement('div');
     heart.classList.add('heart-particle');
     heart.textContent = heartIcons[Math.floor(Math.random() * heartIcons.length)];
-
-    const startX = yesBtn.getBoundingClientRect().left + yesBtn.offsetWidth / 2;
-    const startY = yesBtn.getBoundingClientRect().top + yesBtn.offsetHeight / 2;
-
     heart.style.left = `${startX}px`;
     heart.style.top = `${startY}px`;
     heart.style.setProperty('--dx', `${(Math.random() - 0.5) * 300}px`);
     heart.style.setProperty('--dy', `${-240 - Math.random() * 220}px`);
-
     document.body.appendChild(heart);
     setTimeout(() => heart.remove(), 1700);
   }
 }
 
 function bindEvents() {
-  if (musicBtn) {
-    musicBtn.addEventListener('click', toggleMusic);
-  }
-
+  if (musicBtn) musicBtn.addEventListener('click', toggleMusic);
   if (noBtn) {
     noBtn.addEventListener('mouseover', moveButton);
-    noBtn.addEventListener('touchstart', moveButton);
+    noBtn.addEventListener('touchstart', moveButton, { passive: true });
     noBtn.addEventListener('focus', moveButton);
   }
-
-  if (yesBtn) {
-    yesBtn.addEventListener('click', handleYesClick);
-  }
-
+  if (yesBtn) yesBtn.addEventListener('click', handleYesClick);
   window.addEventListener('resize', positionNoButton);
 }
 
 function initialize() {
   initializeLoveMessage();
+  setupButtonLayout();
   bindEvents();
   requestAnimationFrame(positionNoButton);
 
   for (let i = 0; i < 6; i++) {
-    setTimeout(() => createFallingHeart(), i * 260);
+    setTimeout(createFallingHeart, i * 260);
   }
 }
 
