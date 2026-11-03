@@ -164,83 +164,96 @@ function toggleMusic() {
   }
 }
 
+// Keep NO beside YES on first render (and after resize). It becomes free-moving
+// only after the user tries to interact with it.
 function positionNoButton() {
-  if (!noBtn) return;
-
-  const preferredX = clamp(window.innerWidth * 0.7, 110, window.innerWidth - 140);
-  const preferredY = clamp(window.innerHeight * 0.72, 90, window.innerHeight - 110);
+  if (!noBtn || !yesBtn) return;
 
   noBtn.style.position = 'fixed';
-  noBtn.style.left = `${preferredX}px`;
-  noBtn.style.top = `${preferredY}px`;
+  noBtn.style.width = 'auto';
+  noBtn.style.height = 'auto';
+
+  const yesRect = yesBtn.getBoundingClientRect();
+  const noRect = noBtn.getBoundingClientRect();
+  const gap = 12;
+  const padding = 12;
+  const width = noRect.width;
+  const height = noRect.height;
+
+  let left = yesRect.right + gap;
+  if (left + width > window.innerWidth - padding) {
+    left = yesRect.left - width - gap;
+  }
+  left = clamp(left, padding, Math.max(padding, window.innerWidth - width - padding));
+
+  const top = clamp(
+    yesRect.top + (yesRect.height - height) / 2,
+    padding,
+    Math.max(padding, window.innerHeight - height - padding)
+  );
+
+  noBtn.style.left = `${left}px`;
+  noBtn.style.top = `${top}px`;
   noBtn.style.transition = 'left 0.45s ease, top 0.45s ease';
 }
 
 function moveButton() {
-  if (!mainCard || !noBtn || !yesBtn) return;
+  if (!mainCard || !noBtn || !yesBtn || mainCard.classList.contains('is-celebrating')) return;
 
-  const buttonWidth = noBtn.offsetWidth || 120;
-  const buttonHeight = noBtn.offsetHeight || 52;
-  const padding = 18;
+  const padding = 12;
+  const rect = mainCard.getBoundingClientRect();
+  const noRect = noBtn.getBoundingClientRect();
+  const width = noRect.width;
+  const height = noRect.height;
 
-  const maxX = Math.max(padding, window.innerWidth - buttonWidth - padding);
-  const maxY = Math.max(padding, window.innerHeight - buttonHeight - padding);
+  // Use the visible card area as the movement region, with a viewport-safe fallback
+  // for smaller screens where the card is too narrow to contain the button.
+  const minX = Math.max(padding, rect.left + padding);
+  const maxX = Math.min(window.innerWidth - width - padding, rect.right - width - padding);
+  const minY = Math.max(padding, rect.top + padding);
+  const maxY = Math.min(window.innerHeight - height - padding, rect.bottom - height - padding);
+  const canFitInsideCard = maxX >= minX && maxY >= minY;
+  const rangeMinX = canFitInsideCard ? minX : padding;
+  const rangeMaxX = canFitInsideCard ? maxX : Math.max(padding, window.innerWidth - width - padding);
+  const rangeMinY = canFitInsideCard ? minY : padding;
+  const rangeMaxY = canFitInsideCard ? maxY : Math.max(padding, window.innerHeight - height - padding);
+
+  let left = rangeMinX + Math.random() * Math.max(0, rangeMaxX - rangeMinX);
+  let top = rangeMinY + Math.random() * Math.max(0, rangeMaxY - rangeMinY);
 
   const yesRect = yesBtn.getBoundingClientRect();
-  const avoidLeft = yesRect.left - 90;
-  const avoidRight = yesRect.right + 90;
-  const avoidTop = yesRect.top - 90;
-  const avoidBottom = yesRect.bottom + 90;
+  const noRight = left + width;
+  const noBottom = top + height;
+  const overlapsYes =
+    noRight > yesRect.left - 12 &&
+    left < yesRect.right + 12 &&
+    noBottom > yesRect.top - 12 &&
+    top < yesRect.bottom + 12;
 
-  let x = clamp(
-    padding + Math.random() * (maxX - padding),
-    padding,
-    maxX
-  );
-
-  let y = clamp(
-    padding + Math.random() * (maxY - padding),
-    padding,
-    maxY
-  );
-
-  const noRect = {
-    left: x,
-    right: x + buttonWidth,
-    top: y,
-    bottom: y + buttonHeight
-  };
-
-  const overlaps =
-    noRect.right > avoidLeft &&
-    noRect.left < avoidRight &&
-    noRect.bottom > avoidTop &&
-    noRect.top < avoidBottom;
-
-  if (overlaps) {
-    const preferLeft = x < window.innerWidth / 2;
-    const preferTop = y < window.innerHeight / 2;
-
-    if (preferLeft) {
-      x = Math.max(padding, avoidLeft - buttonWidth - 12);
-    } else {
-      x = Math.min(maxX, avoidRight + 12);
-    }
-
-    if (preferTop) {
-      y = Math.max(padding, avoidTop - buttonHeight - 12);
-    } else {
-      y = Math.min(maxY, avoidBottom + 12);
+  if (overlapsYes) {
+    const candidates = [
+      { left: yesRect.left - width - 16, top },
+      { left: yesRect.right + 16, top },
+      { left, top: yesRect.top - height - 16 },
+      { left, top: yesRect.bottom + 16 }
+    ].map((point) => ({
+      left: clamp(point.left, rangeMinX, rangeMaxX),
+      top: clamp(point.top, rangeMinY, rangeMaxY)
+    }));
+    const safeCandidate = candidates.find((point) => {
+      const right = point.left + width;
+      const bottom = point.top + height;
+      return right <= yesRect.left - 12 || point.left >= yesRect.right + 12 ||
+        bottom <= yesRect.top - 12 || point.top >= yesRect.bottom + 12;
+    });
+    if (safeCandidate) {
+      left = safeCandidate.left;
+      top = safeCandidate.top;
     }
   }
 
-  x = clamp(x, padding, maxX);
-  y = clamp(y, padding, maxY);
-
-  noBtn.style.position = 'fixed';
-  noBtn.style.left = `${x}px`;
-  noBtn.style.top = `${y}px`;
-  noBtn.style.transition = 'left 0.45s ease, top 0.45s ease';
+  noBtn.style.left = `${left}px`;
+  noBtn.style.top = `${top}px`;
 }
 
 function createFallingHeart() {
@@ -310,23 +323,13 @@ function bindEvents() {
     yesBtn.addEventListener('click', handleYesClick);
   }
 
-  window.addEventListener('resize', () => {
-    if (noBtn && noBtn.style.display !== 'none' && !mainCard?.classList.contains('is-celebrating')) {
-      positionNoButton();
-    }
-  });
+  window.addEventListener('resize', positionNoButton);
 }
 
 function initialize() {
   initializeLoveMessage();
   bindEvents();
-
-  requestAnimationFrame(() => {
-    if (noBtn) {
-      positionNoButton();
-      moveButton();
-    }
-  });
+  requestAnimationFrame(positionNoButton);
 
   for (let i = 0; i < 6; i++) {
     setTimeout(() => createFallingHeart(), i * 260);
