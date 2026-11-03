@@ -120,7 +120,7 @@ function startBackgroundScene() {
   backgroundGallery.classList.add('show');
 
   if (heartsInterval) clearInterval(heartsInterval);
-  heartsInterval = setInterval(createFallingHeart, 550);
+  heartsInterval = setInterval(createFallingPhoto, 550);
 }
 
 function createMelody() {
@@ -194,7 +194,6 @@ function moveButton() {
   const width = buttonRect.width;
   const height = buttonRect.height;
 
-  // Constrain the escape area to the card intersected with the visible viewport.
   const minX = Math.max(padding, cardRect.left + padding);
   const maxX = Math.min(window.innerWidth - width - padding, cardRect.right - width - padding);
   const minY = Math.max(padding, cardRect.top + padding);
@@ -224,6 +223,41 @@ function moveButton() {
   noBtn.style.transition = 'left 0.35s ease, top 0.35s ease';
 }
 
+function createFallingPhoto() {
+  if (galleryImages.length === 0) return;
+  const photo = document.createElement('img');
+  photo.className = 'falling-photo';
+  photo.src = galleryImages[Math.floor(Math.random() * galleryImages.length)];
+  photo.alt = '';
+  photo.setAttribute('aria-hidden', 'true');
+  photo.style.left = `${Math.random() * 100}vw`;
+  photo.style.top = '-12vh';
+  photo.style.width = `${Math.random() * 58 + 46}px`;
+  photo.style.height = `${Math.random() * 74 + 56}px`;
+  photo.style.setProperty('--drift', `${(Math.random() - 0.5) * 220}px`);
+  photo.style.animationDelay = `${Math.random() * 4}s`;
+  document.body.appendChild(photo);
+  setTimeout(() => photo.remove(), 8500);
+}
+
+// Burst gallery photo thumbnails from the YES button when the answer is accepted.
+function createCelebrationPhoto(startX, startY) {
+  if (galleryImages.length === 0) return;
+
+  const photo = document.createElement('img');
+  photo.className = 'celebration-photo';
+  photo.src = galleryImages[Math.floor(Math.random() * galleryImages.length)];
+  photo.alt = '';
+  photo.setAttribute('aria-hidden', 'true');
+  photo.style.left = `${startX}px`;
+  photo.style.top = `${startY}px`;
+  photo.style.setProperty('--dx', `${(Math.random() - 0.5) * 260}px`);
+  photo.style.setProperty('--dy', `${-100 - Math.random() * 190}px`);
+  photo.style.setProperty('--rotation', `${(Math.random() - 0.5) * 50}deg`);
+  document.body.appendChild(photo);
+  setTimeout(() => photo.remove(), 1800);
+}
+
 function createFallingHeart() {
   const heart = document.createElement('div');
   heart.classList.add('falling-heart');
@@ -251,21 +285,11 @@ function handleYesClick() {
   loveCard.classList.remove('show');
   requestAnimationFrame(() => loveCard.classList.add('show'));
 
-  const heartIcons = ['💖', '💗', '💕', '💞', '💘', '❤️', '💓'];
   const yesRect = yesBtn.getBoundingClientRect();
   const startX = yesRect.left + yesRect.width / 2;
   const startY = yesRect.top + yesRect.height / 2;
-
-  for (let i = 0; i < 45; i++) {
-    const heart = document.createElement('div');
-    heart.classList.add('heart-particle');
-    heart.textContent = heartIcons[Math.floor(Math.random() * heartIcons.length)];
-    heart.style.left = `${startX}px`;
-    heart.style.top = `${startY}px`;
-    heart.style.setProperty('--dx', `${(Math.random() - 0.5) * 300}px`);
-    heart.style.setProperty('--dy', `${-240 - Math.random() * 220}px`);
-    document.body.appendChild(heart);
-    setTimeout(() => heart.remove(), 1700);
+  for (let i = 0; i < 30; i += 1) {
+    createCelebrationPhoto(startX, startY);
   }
 }
 
