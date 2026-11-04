@@ -16,11 +16,9 @@ I never expected you.
 I never imagined that an ordinary day would introduce me to someone who would quietly change the way I looked at life.
 
 You came into my world without a warning, without a perfect plan, and without any promises.
-
 Yet somehow, you became one of the greatest blessings I have ever known.
 
 You taught me that not everything beautiful needs to be planned.
-
 Some of life's most precious moments happen.
 
 when we stop trying to control every detail and simply allow life to surprise us.
@@ -34,10 +32,9 @@ And maybe that's the beauty of it. Because the best things in life rarely arrive
 They appear quietly, change us gently, and leave our hearts fuller than they were before.
 
 So if there's one thing I'll always be grateful for,
-
 it's that life didn't follow my plans.
 
-Because if it had, I might never have met you—the most beautiful, unexpected chapter of my story.
+Because if it had, I might never have met you the most beautiful, unexpected chapter of my story.
 
 ♡`;
 
